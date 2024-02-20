@@ -32,7 +32,24 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.container-fluid {
+  background-color: #f5f5dc;
+  /* Crema o crudo */
+  padding-top: 50px;
+  /* Agrega un poco de espacio en la parte superior */
+  min-height: 100vh;
+  /* Asegura que el contenedor ocupe al menos todo el alto de la ventana */
+}
+
+.card {
+  border-radius: 15px;
+  /* Bordes redondeados */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  /* Sombra difuminada */
 }
