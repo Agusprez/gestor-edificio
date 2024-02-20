@@ -1,17 +1,37 @@
 import React from 'react';
 import './assets/css/App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Login from './components/Login'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './components/Login';
 import UnidadesFuncionales from './components/UnidadesFuncionales';
+import Home from './components/Home';
+//import CrearUsuario from './components/CrearUsuario';
 
 function App() {
+  const userId = sessionStorage.getItem('userId');
+
   return (
     <React.Fragment>
       <Router>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/UF" element={<UnidadesFuncionales />} />
+          {/* Permitir el acceso a la página de inicio de sesión y a la creación de usuario sin restricciones */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/crear-usuario" element={<Login />} />
+
+          {userId ? (
+            <Route path="/home" element={<Home />} />
+          ) : (
+            <Route path="/home" element={<Navigate to="/login" />} />
+          )}
+          {/* Restringir el acceso a la página de unidades funcionales solo a usuarios autenticados */}
+          {userId ? (
+            <Route path="/uf" element={<UnidadesFuncionales />} />
+          ) : (
+            <Route path="/uf" element={<Navigate to="/login" />} />
+          )}
+
+          {/* Redireccionar a la página de inicio de sesión si la ruta no coincide */}
+          <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Router>
     </React.Fragment>
@@ -19,3 +39,4 @@ function App() {
 }
 
 export default App;
+
