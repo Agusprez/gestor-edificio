@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faSpinner } from '@fortawesome/free-solid-svg-icons'; // Importa el icono de Spinner
 import { useNavigate } from 'react-router-dom'; // Importa useHistory
 
 const Login = () => {
@@ -10,7 +10,7 @@ const Login = () => {
   const [userId, setUserId] = useState(null);
   const [error, setError] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Estado para indicar si se está cargando
   const navigate = useNavigate(); // Obtiene el objeto Navigate
 
   const handleEmailChange = (event) => {
@@ -27,6 +27,14 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
+      // Validar campos de entrada
+      if (!email || !password) {
+        setError('Por favor, completa todos los campos.');
+        return;
+      }
+
+      setIsLoading(true); // Establecer isLoading a true mientras se procesa la solicitud
+
       const response = await axios.post('http://localhost:4500/login', { email, password });
       const id = response.data.userId;
       setUserId(id);
@@ -34,12 +42,18 @@ const Login = () => {
 
       // Guardar el ID de usuario en sessionStorage
       sessionStorage.setItem('userId', id);
-      setLoggedIn(true);
       navigate('/home');
     } catch (error) {
       console.error('Error al iniciar sesión:', error.message);
       setError('Error al iniciar sesión. Por favor, verifica tus credenciales.');
+    } finally {
+      setIsLoading(false); // Establecer isLoading a false cuando la solicitud se haya completado (ya sea exitosa o no)
     }
+  };
+
+  const handleRegisterRedirect = () => {
+    // Redireccionar a la página de registro
+    navigate('/registro');
   };
 
   return (
@@ -78,7 +92,16 @@ const Login = () => {
                     </button>
                   </div>
                 </div>
-                <button type="submit" className="btn btn-primary">Iniciar sesión</button>
+                <div className="mb-3">
+                  <button type="submit" className="btn-login btn btn-primary me-2" disabled={isLoading}>
+                    {isLoading ? (
+                      <FontAwesomeIcon icon={faSpinner} spin /> // Muestra el icono de carga si isLoading es true
+                    ) : (
+                      'Iniciar sesión'
+                    )}
+                  </button>
+                  <button type="button" className="btn btn-secondary" onClick={handleRegisterRedirect}>Registrarse</button>
+                </div>
               </form>
               {userId && <p>ID de usuario: {userId}</p>} {/* Muestra el ID del usuario si está disponible */}
             </div>
@@ -90,4 +113,3 @@ const Login = () => {
 };
 
 export default Login;
-

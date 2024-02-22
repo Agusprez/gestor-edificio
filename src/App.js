@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import UnidadesFuncionales from './components/UnidadesFuncionales';
+import Register from './components/Register';
 import Home from './components/Home';
 //import CrearUsuario from './components/CrearUsuario';
 
@@ -16,13 +17,11 @@ function App() {
         <Routes>
           {/* Permitir el acceso a la página de inicio de sesión y a la creación de usuario sin restricciones */}
           <Route path="/login" element={<Login />} />
-          <Route path="/crear-usuario" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/home" element={<Home />} />
 
-          {userId ? (
-            <Route path="/home" element={<Home />} />
-          ) : (
-            <Route path="/home" element={<Navigate to="/login" />} />
-          )}
+
+
           {/* Restringir el acceso a la página de unidades funcionales solo a usuarios autenticados */}
           {userId ? (
             <Route path="/uf" element={<UnidadesFuncionales />} />

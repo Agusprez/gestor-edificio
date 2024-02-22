@@ -41,15 +41,32 @@
 .container-fluid {
   background-color: #f5f5dc;
   /* Crema o crudo */
-  padding-top: 50px;
+  padding-top: 5px;
   /* Agrega un poco de espacio en la parte superior */
   min-height: 100vh;
   /* Asegura que el contenedor ocupe al menos todo el alto de la ventana */
 }
 
+div.card {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+
+.navbar {
+  background-color: #f5f5dc;
+}
+
+
 .card {
+  height: 500px;
   border-radius: 15px;
   /* Bordes redondeados */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   /* Sombra difuminada */
+}
+
+.btn-login {
+  width: 150px;
+  /* Ancho fijo del botón */
 }
