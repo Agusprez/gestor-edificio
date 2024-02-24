@@ -41,6 +41,7 @@ const Login = () => {
         throw new Error('No se recibió respuesta del servidor. Por favor, intenta de nuevo más tarde.');
       }
 
+
       const id = response.data.userId;
       setUserId(id);
       setError(null); // Limpia cualquier mensaje de error previo
@@ -49,8 +50,13 @@ const Login = () => {
       sessionStorage.setItem('userId', id);
       navigate('/home');
     } catch (error) {
-      console.error('Error al iniciar sesión:', error.message);
-      setError(error.message);
+      if (error.message === "Request failed with status code 400") {
+        console.error("Error al iniciar sesión:", error.message)
+        setError("Credenciales inválidas.")
+      } else {
+        console.error('Error al iniciar sesión:', error.message);
+        setError(error.message);
+      }
     } finally {
       setIsLoading(false); // Establecer isLoading a false cuando la solicitud se haya completado (ya sea exitosa o no)
     }

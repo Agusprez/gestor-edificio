@@ -7,14 +7,14 @@ import { useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
+  const [invalid, setInvalid] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-  const [listaDePreguntas, setListaDePreguntas] = useState([]); // Estado para almacenar las preguntas de seguridad
-  const [preguntaSeguridadElegida, setPreguntaSeguridadElegida] = useState(''); // Estado para almacenar la pregunta de seguridad seleccionada
+  const [listaDePreguntas, setListaDePreguntas] = useState([]);
+  const [preguntaSeguridadElegida, setPreguntaSeguridadElegida] = useState('');
   const [respuestaDeSeguridad, setRespuestaDeSeguridad] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-
   const [newPassword, setNewPassword] = useState('');
   const navigate = useNavigate();
 
@@ -38,7 +38,22 @@ const ResetPassword = () => {
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
-
+  const handlePasswordBlurREGEX = async () => {
+    try {
+      const passwordBlurREGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+      if (!passwordBlurREGEX.test(newPassword)) {
+        setError('Por favor, introduce una contraseña válida. Debe contener al menos 8 carácteres, una mayúscula, una minúscula y un número.');
+        setInvalid(true)
+        return;
+      }
+      setError(null);
+    } catch (error) {
+      console.error('Error al verificar contraseña:', error.message);
+      setError('Error al verificar contraseña');
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const handlePreguntaElegidaChange = (event) => {
     setPreguntaSeguridadElegida(event.target.value);
   };
@@ -65,7 +80,6 @@ const ResetPassword = () => {
 
       });
       setSuccessMessage(response.data.message);
-      alert("Cambio correcto")
       setTimeout(() => {
         navigate("/login");
       }, 3000);
@@ -128,6 +142,7 @@ const ResetPassword = () => {
                       placeholder="Nueva Contraseña"
                       value={newPassword}
                       onChange={handleNewPasswordChange}
+                      onBlur={handlePasswordBlurREGEX}
                       required
                     />
                     <button
@@ -142,11 +157,11 @@ const ResetPassword = () => {
 
 
 
-                <button type="submit" className="btn d-block mx-auto btn-pass btn-primary" disabled={isLoading}>
+                <button type="submit" className="btn d-block mx-auto btn-pass btn-primary" disabled={isLoading || invalid}>
                   {isLoading ? (
                     <FontAwesomeIcon icon={faSpinner} spin />
                   ) : (
-                    'Restablecer Contraseña'
+                    'Restablecer contraseña'
                   )}
                 </button>
                 <button

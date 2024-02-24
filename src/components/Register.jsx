@@ -115,6 +115,7 @@ const Register = () => {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
         setError('Por favor, introduce una dirección de correo electrónico válida.');
+        setInvalid(true)
         return;
       }
 
@@ -125,6 +126,22 @@ const Register = () => {
     } catch (error) {
       console.error('Error al verificar el correo electrónico:', error.message);
       setError('Error al verificar el correo electrónico.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const handlePasswordBlurREGEX = async () => {
+    try {
+      const passwordBlurREGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+      if (!passwordBlurREGEX.test(password)) {
+        setError('Por favor, introduce una contraseña válida. Debe contener al menos 8 carácteres, una mayúscula, una minúscula y un número.');
+        setInvalid(true)
+        return;
+      }
+      setError(null);
+    } catch (error) {
+      console.error('Error al verificar contraseña:', error.message);
+      setError('Error al verificar contraseña');
     } finally {
       setIsLoading(false);
     }
@@ -195,6 +212,7 @@ const Register = () => {
                       className="form-control"
                       placeholder="Contraseña"
                       value={password}
+                      onBlur={handlePasswordBlurREGEX}
                       onChange={handlePasswordChange}
 
                     />
