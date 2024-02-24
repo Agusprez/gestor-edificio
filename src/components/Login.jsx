@@ -36,6 +36,11 @@ const Login = () => {
       setIsLoading(true); // Establecer isLoading a true mientras se procesa la solicitud
 
       const response = await axios.post('http://localhost:4500/login', { email, password });
+
+      if (!response) {
+        throw new Error('No se recibió respuesta del servidor. Por favor, intenta de nuevo más tarde.');
+      }
+
       const id = response.data.userId;
       setUserId(id);
       setError(null); // Limpia cualquier mensaje de error previo
@@ -45,11 +50,12 @@ const Login = () => {
       navigate('/home');
     } catch (error) {
       console.error('Error al iniciar sesión:', error.message);
-      setError('Error al iniciar sesión. Por favor, verifica tus credenciales.');
+      setError(error.message);
     } finally {
       setIsLoading(false); // Establecer isLoading a false cuando la solicitud se haya completado (ya sea exitosa o no)
     }
   };
+  ;
 
   const handleRegisterRedirect = () => {
     // Redireccionar a la página de registro
