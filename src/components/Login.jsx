@@ -59,7 +59,7 @@ const Login = () => {
 
   const handleRegisterRedirect = () => {
     // Redireccionar a la página de registro
-    navigate('/registro');
+    navigate('/register');
   };
 
   return (
