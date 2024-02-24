@@ -59,7 +59,7 @@ div.card {
 
 
 .card {
-  
+
   height: 500px;
   border-radius: 15px;
   /* Bordes redondeados */
@@ -70,4 +70,8 @@ div.card {
 .btn-login {
   width: 150px;
   /* Ancho fijo del botón */
+}
+
+.btn-pass {
+  width: 250px;
 }

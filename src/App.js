@@ -6,6 +6,7 @@ import Login from './components/Login';
 import UnidadesFuncionales from './components/UnidadesFuncionales';
 import Register from './components/Register';
 import Home from './components/Home';
+import ResetPassword from './components/ResetPassword';
 //import CrearUsuario from './components/CrearUsuario';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           {/* Permitir el acceso a la página de inicio de sesión y a la creación de usuario sin restricciones */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/home" element={<Home />} />
 
 

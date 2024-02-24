@@ -84,6 +84,7 @@ const Register = () => {
 
   const handleRegister = async () => {
     // Crear un objeto con los datos del registro
+    setIsLoading(true)
     const userData = {
       email: email,
       nombreCompleto: nombreCompleto,
@@ -195,7 +196,6 @@ const Register = () => {
                       placeholder="Contraseña"
                       value={password}
                       onChange={handlePasswordChange}
-                      onBlur={handleConfirmPasswordBlur} // Agregar este evento onBlur
 
                     />
                     <button

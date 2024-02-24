@@ -61,7 +61,10 @@ const Login = () => {
     // Redireccionar a la página de registro
     navigate('/register');
   };
-
+  const handleResetPasswordRedirect = () => {
+    // Redireccionar a la página de registro
+    navigate('/reset-password');
+  };
   return (
     <div className="container-fluid">
       <div className="row justify-content-center mt-5">
@@ -98,16 +101,23 @@ const Login = () => {
                     </button>
                   </div>
                 </div>
-                <div className="mb-3">
-                  <button type="submit" className="btn-login btn btn-primary me-2" disabled={isLoading}>
+                <div className="mb-4 d-flex justify-content-left">
+                  <button type="submit" className="btn-login btn btn-primary" disabled={isLoading}>
                     {isLoading ? (
-                      <FontAwesomeIcon icon={faSpinner} spin /> // Muestra el icono de carga si isLoading es true
+                      <FontAwesomeIcon icon={faSpinner} spin />
                     ) : (
                       'Iniciar sesión'
                     )}
                   </button>
-                  <button type="button" className="btn btn-secondary" onClick={handleRegisterRedirect}>Registrarse</button>
+                  <button type="button" className="btn btn-secondary mx-2" onClick={handleRegisterRedirect}>
+                    Registrarse
+                  </button>
+                  <button type="button" className="btn btn-secondary " onClick={handleResetPasswordRedirect}>
+                    Olvidé mi contraseña
+                  </button>
+
                 </div>
+
               </form>
               {userId && <p>ID de usuario: {userId}</p>} {/* Muestra el ID del usuario si está disponible */}
             </div>
