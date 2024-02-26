@@ -12,6 +12,7 @@ const Register = () => {
   const [error, setError] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isValid, setIsValid] = useState("");
   const [emailExists, setEmailExists] = useState(false);
   const [ufAsociada, setUfAsociada] = useState('');
   const [invalid, setInvalid] = useState(false);
@@ -116,6 +117,7 @@ const Register = () => {
       if (!emailRegex.test(email)) {
         setError('Por favor, introduce una dirección de correo electrónico válida.');
         setInvalid(true)
+        setIsValid(false)
         return;
       }
 
@@ -123,6 +125,7 @@ const Register = () => {
       const response = await axios.post('http://localhost:4500/login/checkEmail', { email });
       setEmailExists(response.data.exists);
       setError(null);
+      setIsValid(true)
     } catch (error) {
       console.error('Error al verificar el correo electrónico:', error.message);
       setError('Error al verificar el correo electrónico.');
@@ -178,8 +181,9 @@ const Register = () => {
                     onChange={handleEmailChange}
                     onBlur={handleEmailBlur} // Verificar el correo electrónico al perder el foco del campo
                   />
-                  {isLoading && <p>Verificando disponibilidad del correo electrónico...</p>}
+                  {isLoading && <p className="text-info">Verificando disponibilidad del correo electrónico...</p>}
                   {emailExists && !isLoading && <p className="text-danger">Este correo electrónico ya está en uso. Por favor, inicia sesión si ya tienes una cuenta.</p>}
+                  {isValid && !isLoading && !emailExists && <p className="text-success">Correo electrónico válido.</p>}
                 </div>
 
                 <div className="mb-3">

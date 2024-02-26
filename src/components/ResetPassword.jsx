@@ -47,6 +47,7 @@ const ResetPassword = () => {
         return;
       }
       setError(null);
+      setInvalid(false)
     } catch (error) {
       console.error('Error al verificar contraseña:', error.message);
       setError('Error al verificar contraseña');
@@ -103,7 +104,7 @@ const ResetPassword = () => {
                   <input
                     type="email"
                     className="form-control"
-                    placeholder="Correo Electrónico"
+                    placeholder="Correo electrónico"
                     value={email}
                     onChange={handleEmailChange}
                     required
