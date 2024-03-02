@@ -4,8 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import NavigationBar from './NavigationBar';
 
-
-const MisPagos = () => {
+const UltimosPagos = () => {
   const [pagos, setPagos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const userId = sessionStorage.getItem('userId');
@@ -22,7 +21,6 @@ const MisPagos = () => {
             const fecha = periodo.cuotaNro ? `Cuota Nro ${periodo.cuotaNro}°` : periodo.cuotaMes;
             try {
               const fechaPago = convertirTimestampAFechaLegible(periodo.fechaDePago)
-              console.log(fechaPago)
               return { fecha, monto: periodo.valor, fechaPago };
             } catch (err) {
               console.log(err.message)
@@ -31,8 +29,22 @@ const MisPagos = () => {
             return { fecha, monto: periodo.valor, fechaPago: "Sin datos." };
           }));
         });
-        // Establecer los pagos en el estado local
-        setPagos(pagosData);
+
+        // Filtrar los pagos que se hicieron en el mes actual y el mes anterior
+        const fechaActual = new Date();
+        const mesActual = fechaActual.getMonth();
+
+        const pagosFiltrados = pagosData.filter(pago => {
+
+          const fechaPago = (pago.fechaPago);
+          const mesPago = fechaPago.getMonth();
+
+
+          return (mesPago === mesActual || mesPago === mesActual - 1);
+        });
+
+        // Establecer los pagos filtrados en el estado local
+        setPagos(pagosFiltrados);
         setIsLoading(false); // Cambiar isLoading a false una vez que se han cargado los datos
       } catch (error) {
         console.error('Error al obtener los pagos:', error);
@@ -45,10 +57,11 @@ const MisPagos = () => {
   }, [userId, ufAsoc]);
 
   const convertirTimestampAFechaLegible = timestamp => {
-    let fecha = new Date(timestamp._seconds * 1000); // Convertir segundos a milisegundos
-    fecha = fecha.toLocaleDateString()
-    return fecha; // Formatear la fecha como una cadena legible
+    const fecha = new Date(timestamp._seconds * 1000); // Convertir segundos a milisegundos
+    return fecha; // Devolver un objeto Date
   };
+
+
 
   return (
     <div>
@@ -58,11 +71,11 @@ const MisPagos = () => {
           <div className="col-md-8">
             <div className="card">
               <div className="card-body">
-                <h2>Mis Pagos</h2>
+                <h2>Ultimos Pagos</h2>
                 <br />
                 {isLoading ? (
                   <div className="d-flex align-items-center">
-                    <p>Cargando pagos...                      <FontAwesomeIcon icon={faSpinner} spin className="ml-2" /></p>
+                    <p>Cargando pagos...<FontAwesomeIcon icon={faSpinner} spin className="ml-2" /></p>
                   </div>
                 ) : (
                   <React.Fragment>
@@ -76,7 +89,7 @@ const MisPagos = () => {
                               <div className="card-body">
                                 <h5 className="card-title">Pago {pago.fecha}</h5>
                                 <br />
-                                <p className="card-text"><strong>Fecha: </strong>{pago.fechaPago} </p>
+                                <p className="card-text"><strong>Fecha: </strong>{pago.fechaPago.toLocaleDateString()} </p>
                                 <p className="card-text"><strong>Monto: </strong>${pago.monto}</p>
                               </div>
                             </div>
@@ -95,5 +108,4 @@ const MisPagos = () => {
   );
 };
 
-
-export default MisPagos;
+export default UltimosPagos;

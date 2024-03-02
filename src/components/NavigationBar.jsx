@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const NavigationBar = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const ufAsoc = sessionStorage.getItem('ufAsoc');
 
   const handleLogout = () => {
@@ -11,6 +12,9 @@ const NavigationBar = () => {
     window.location.href = '/login';
   };
 
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -31,16 +35,26 @@ const NavigationBar = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/home">Inicio</Link>
             </li>
-            <li className="nav-item"
-              onMouseLeave={handleMouseLeave}
-              onMouseEnter={handleMouseEnter}
-            ><Link
-              className={`nav-link ${!ufAsoc ? 'disabled' : ''}`}
-              to={!ufAsoc ? '#' : "/mis-pagos"}
-            >
+            <li onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave} className={`nav-item dropdown ${isDropdownOpen ? 'show' : ''}`}>
+              <Link
+                className={`nav-link dropdown-toggle ${!ufAsoc ? 'disabled' : ''}`}
+                to={!ufAsoc ? '#' : "/mis-pagos"}
+                id="navbarDropdown"
+                role="button"
+                onClick={handleDropdownToggle}
+
+              >
                 Mis pagos
-                {!ufAsoc && isHovered && <div className="warning position-absolute top-0 start-50 translate-middle-x z-index-1   p-3 fs-5">Usuario no habilitado</div>}
+                {!ufAsoc && isHovered && <div className="warning    p-3 fs-5">Usuario no habilitado</div>}
               </Link>
+              <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown">
+                <li><Link className="dropdown-item" to="/nuevo-pago">Ingresar nuevo pago</Link></li>
+                <li><Link className="dropdown-item" to="/ultimos-pagos">Ver últimos pagos</Link></li>
+                <li><Link className="dropdown-item" to="/deuda">Ver deuda</Link></li>
+                <li><Link className="dropdown-item" to="/resolver-problemas">Resolver problemas de pago</Link></li>
+                {/* Agrega aquí otras opciones según sea necesario */}
+              </ul>
             </li>
             {/* Otros elementos de la barra de navegación */}
           </ul>

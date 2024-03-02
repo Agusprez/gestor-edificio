@@ -78,16 +78,19 @@ div.card {
 
 /* Agrega estos estilos CSS en tu archivo de estilos */
 .warning {
-  margin-top: 0.5rem;
   background-color: #f8d7da;
   color: #721c24;
   padding: 0.5rem;
   border-radius: 0.25rem;
   font-size: 0.875rem;
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  /* Cambiar a posición fija */
+  top: 5%;
+  /* Posición vertical al 50% de la pantalla */
   left: 50%;
-  transform: translateX(-50%);
-  opacity: 1;
-  transition: visibility 0s, opacity 0.3s linear;
+  /* Posición horizontal al 50% de la pantalla */
+  transform: translate(-50%, -50%);
+  /* Centrar completamente el elemento */
+  z-index: 999;
+  /* Asegurarse de que esté en la parte superior */
 }
