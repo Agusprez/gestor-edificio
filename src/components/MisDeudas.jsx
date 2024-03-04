@@ -3,9 +3,10 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import NavigationBar from './NavigationBar';
+import { Link } from 'react-router-dom';
 
 
-const MisPagos = () => {
+const MisDeudas = () => {
   const [pagos, setPagos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const userId = sessionStorage.getItem('userId');
@@ -14,21 +15,15 @@ const MisPagos = () => {
   useEffect(() => {
     const fetchPagos = async () => {
       try {
-        const response = await axios.post(`http://localhost:4500/uf/pagosSegunPropietario/${ufAsoc}`, { usuarioId: userId });
+        const response = await axios.post(`http://localhost:4500/uf/impagosSegunPropietario/${ufAsoc}`, { usuarioId: userId });
         // Procesar la respuesta del servidor para obtener los pagos
         let pagosData = [];
         response.data.expensas.forEach(expensa => {
           pagosData = pagosData.concat(expensa.periodosPagados.map(periodo => {
             const fecha = periodo.cuotaNro ? `Cuota Nro ${periodo.cuotaNro}°` : periodo.cuotaMes;
-            try {
-              const fechaPago = convertirTimestampAFechaLegible(periodo.fechaDePago)
-              console.log(fechaPago)
-              return { fecha, monto: periodo.valor, fechaPago };
-            } catch (err) {
-              console.log(err.message)
-            }
 
-            return { fecha, monto: periodo.valor, fechaPago: "Sin datos." };
+
+            return { fecha, monto: periodo.valor, idDeuda: "1" };
           }));
         });
         // Establecer los pagos en el estado local
@@ -44,11 +39,7 @@ const MisPagos = () => {
     fetchPagos();
   }, [userId, ufAsoc]);
 
-  const convertirTimestampAFechaLegible = timestamp => {
-    let fecha = new Date(timestamp._seconds * 1000); // Convertir segundos a milisegundos
-    fecha = fecha.toLocaleDateString()
-    return fecha; // Formatear la fecha como una cadena legible
-  };
+
 
   return (
     <div>
@@ -58,28 +49,28 @@ const MisPagos = () => {
           <div className="col-md-8">
             <div className="card">
               <div className="card-body">
-                <h2>Mis Pagos</h2>
-                <p>Este servicio te brinda la información sobre todos los pagos registrados.</p>
+                <h2>Mis Deudas</h2>
+                <p>Este servicio te brinda la información sobre todos los periodos que no estan pagados.</p>
                 <br />
                 {isLoading ? (
                   <div className="d-flex align-items-center">
-                    <p>Cargando pagos...                      <FontAwesomeIcon icon={faSpinner} spin className="ml-2" /></p>
+                    <p>Cargando deuda...                      <FontAwesomeIcon icon={faSpinner} spin className="ml-2" /></p>
                   </div>
                 ) : (
                   <React.Fragment>
                     {pagos.length === 0 ? (
-                      <p className="warning p-3 fs-5"> No hay pagos disponibles.</p>
+                      <p className="warning p-3 fs-5"> No hay deuda disponibles.</p>
                     ) : (
                       <div className="row">
                         {pagos.map((pago, index) => (
+
                           <div key={index} className="col-md-4 mb-3">
                             <div className="card">
-                              <div className="card-body">
-                                <h5 className="card-title">Pago {pago.fecha}</h5>
+                              <div className="card-body ">
+                                <h5 className="card-title text-center text-decoration-underline"> {pago.fecha}</h5>
                                 <br />
-                                <p className="card-text"><strong>Fecha: </strong>{pago.fechaPago} </p>
                                 <p className="card-text"><strong>Monto: </strong>${pago.monto}</p>
-                              </div>
+                                <Link to={{ pathname: '/nuevo-pago', state: { data: "Gato" } }} className='btn btn-primary'>Registrar pago</Link>                              </div>
                             </div>
                           </div>
                         ))}
@@ -97,4 +88,4 @@ const MisPagos = () => {
 };
 
 
-export default MisPagos;
+export default MisDeudas;

@@ -72,6 +72,7 @@ const UltimosPagos = () => {
             <div className="card">
               <div className="card-body">
                 <h2>Ultimos Pagos</h2>
+                <p>Este servicio te permite ver los pagos registrados durante el mes en curso y el mes pasado.</p>
                 <br />
                 {isLoading ? (
                   <div className="d-flex align-items-center">
@@ -80,7 +81,7 @@ const UltimosPagos = () => {
                 ) : (
                   <React.Fragment>
                     {pagos.length === 0 ? (
-                      <p>No hay pagos disponibles.</p>
+                      <p className="warning p-3 fs-5">No hay pagos disponibles.</p>
                     ) : (
                       <div className="row">
                         {pagos.map((pago, index) => (

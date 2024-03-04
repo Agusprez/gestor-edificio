@@ -9,6 +9,8 @@ import Home from './components/Home';
 import ResetPassword from './components/ResetPassword';
 import MisPagos from './components/MisPagos';
 import UltimosPagos from './components/UltimosPagos';
+import MisDeudas from './components/MisDeudas';
+import NuevoPago from './components/NuevoPago';
 //import CrearUsuario from './components/CrearUsuario';
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/mis-pagos" element={<MisPagos />} />
           <Route path="/ultimos-pagos" element={<UltimosPagos />} />
+          <Route path="/deuda" element={<MisDeudas />} />
+          <Route path="/nuevo-pago" element={<NuevoPago />} />
 
 
 

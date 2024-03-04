@@ -26,8 +26,8 @@ const NavigationBar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
       <div className="container">
-        <Link className="navbar-brand" to="/">Edificio Rosa I</Link>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <Link className="navbar-brand" to="#">Edificio Rosa I</Link>
+        <button className="navbar-toggler" disabled type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -39,7 +39,7 @@ const NavigationBar = () => {
               onMouseLeave={handleMouseLeave} className={`nav-item dropdown ${isDropdownOpen ? 'show' : ''}`}>
               <Link
                 className={`nav-link dropdown-toggle ${!ufAsoc ? 'disabled' : ''}`}
-                to={!ufAsoc ? '#' : "/mis-pagos"}
+                to='#'
                 id="navbarDropdown"
                 role="button"
                 onClick={handleDropdownToggle}
@@ -49,6 +49,7 @@ const NavigationBar = () => {
                 {!ufAsoc && isHovered && <div className="warning    p-3 fs-5">Usuario no habilitado</div>}
               </Link>
               <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown">
+                <li><Link className="dropdown-item" to="/mis-pagos">Pagos registrados</Link></li>
                 <li><Link className="dropdown-item" to="/nuevo-pago">Ingresar nuevo pago</Link></li>
                 <li><Link className="dropdown-item" to="/ultimos-pagos">Ver últimos pagos</Link></li>
                 <li><Link className="dropdown-item" to="/deuda">Ver deuda</Link></li>
