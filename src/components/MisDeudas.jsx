@@ -5,7 +5,6 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import NavigationBar from './NavigationBar';
 import { Link } from 'react-router-dom';
 
-
 const MisDeudas = () => {
   const [pagos, setPagos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,9 +20,9 @@ const MisDeudas = () => {
         response.data.expensas.forEach(expensa => {
           pagosData = pagosData.concat(expensa.periodosPagados.map(periodo => {
             const fecha = periodo.cuotaNro ? `Cuota Nro ${periodo.cuotaNro}°` : periodo.cuotaMes;
+            const idDeuda = periodo.id
 
-
-            return { fecha, monto: periodo.valor, idDeuda: "1" };
+            return { fecha, monto: periodo.valor, idDeuda };
           }));
         });
         // Establecer los pagos en el estado local
@@ -39,6 +38,9 @@ const MisDeudas = () => {
     fetchPagos();
   }, [userId, ufAsoc]);
 
+  const handleClickSubmit = (idDeuda) => {
+    sessionStorage.setItem('idDeuda', idDeuda)
+  }
 
 
   return (
@@ -70,7 +72,8 @@ const MisDeudas = () => {
                                 <h5 className="card-title text-center text-decoration-underline"> {pago.fecha}</h5>
                                 <br />
                                 <p className="card-text"><strong>Monto: </strong>${pago.monto}</p>
-                                <Link to={{ pathname: '/nuevo-pago', state: { data: "Gato" } }} className='btn btn-primary'>Registrar pago</Link>                              </div>
+                                <Link to="/nuevo-pago" onClick={() => handleClickSubmit(pago.idDeuda)} className='btn btn-primary'>Registrar pago</Link>
+                              </div>
                             </div>
                           </div>
                         ))}
