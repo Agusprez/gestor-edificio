@@ -76,14 +76,19 @@ const NuevoPago = () => {
   // Función para manejar el envío del formulario
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const fechaDePago = new Date()
     const datosParaEnviar = {
+
       intereses: intereses,
-      fechaDePago: new Date(),
-      imagenId
+      fechaDePago: fechaDePago.getTime(),
+      imagenId,
+      pagado: true,
+      verificado: false
     }
 
+    console.log(datosParaEnviar)
     try {
-      const response = await axios.patch(`localhost:3000/uf/ingresarPago2/${idPropietario}/${cuotaMes_cuotaNro}`, datosParaEnviar)
+      const response = await axios.patch(`http://localhost:4500/uf/ingresarPago/${idPropietario}/${cuotaMes_cuotaNro}`, datosParaEnviar)
       console.log(response.data)
     } catch (error) {
 
@@ -98,7 +103,7 @@ const NuevoPago = () => {
           <div className="col-md-8">
             <div className="card">
               <div className="card-body">
-                <h2>Ingresar nuevo Pago</h2>
+                <h2 className='text-center text-decoration-underline'>Ingresar nuevo Pago</h2>
                 {loading || !expensaData ? (
                   // Mostrar el circulito de carga si se está cargando o si expensaData es null
                   <div className="d-flex justify-content-center">

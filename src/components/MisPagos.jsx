@@ -23,7 +23,7 @@ const MisPagos = () => {
             try {
               const fechaPago = convertirTimestampAFechaLegible(periodo.fechaDePago)
               console.log(fechaPago)
-              return { fecha, monto: periodo.valor, fechaPago, pagoVerificado: periodo.verificado };
+              return { fecha, monto: periodo.valor, fechaPago, pagoVerificado: periodo.verificado, interes: periodo.valorIntereses };
             } catch (err) {
               console.log(err.message)
             }

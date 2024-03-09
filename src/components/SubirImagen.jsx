@@ -59,8 +59,8 @@ const SubirImagen = ({ onUploadSuccess }) => {
 
   return (
     <div>
-      <input className="btn btn-outline-secondary" type="file" onChange={handleImagenSeleccionada} />
-      <button className="btn btn-primary m-2" onClick={handleSubirImagen}>Subir Imagen</button>
+      <input className="btn btn-outline-secondary" disabled={cargaCompleta} type="file" onChange={handleImagenSeleccionada} />
+      <button className="btn btn-primary m-2" disabled={cargaCompleta} onClick={handleSubirImagen}>Subir Imagen</button>
       {/* Barra de progreso */}
       {progreso > 0 && progreso < 100 && (
         <div className="progress mt-2">
@@ -77,7 +77,20 @@ const SubirImagen = ({ onUploadSuccess }) => {
         </div>
       )}
       {/* Mostrar mensaje de carga completa si la carga está completa */}
-      {cargaCompleta && <p className='text-success'>La imagen se ha subido correctamente.</p>}
+      {cargaCompleta && (
+        <div className="progress mt-2">
+          <div
+            className="progress-bar bg-success"
+            role="progressbar"
+            style={{ width: '100%' }}
+            aria-valuenow={100}
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            La imagen se ha subido correctamente.
+          </div>
+        </div>
+      )}
     </div>
   );
 };
