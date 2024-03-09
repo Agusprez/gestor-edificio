@@ -50,7 +50,6 @@ const NavigationBar = () => {
               </Link>
               <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown">
                 <li><Link className="dropdown-item" to="/mis-pagos">Pagos registrados</Link></li>
-                <li><Link className="dropdown-item" to="/nuevo-pago">Ingresar nuevo pago</Link></li>
                 <li><Link className="dropdown-item" to="/ultimos-pagos">Ver últimos pagos</Link></li>
                 <li><Link className="dropdown-item" to="/deuda">Ver deuda</Link></li>
                 <li><Link className="dropdown-item" to="/resolver-problemas">Resolver problemas de pago</Link></li>

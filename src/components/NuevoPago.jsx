@@ -116,7 +116,7 @@ const NuevoPago = () => {
                     {/* Mostrar intereses */}
                     {/* Mostrar intereses si los días son mayores a 0 */}
                     {diasInt > 0 && (
-                      <p>Intereses al 110% anual: <strong>$ {intereses.toFixed(2)} || {diasInt} días de interés.</strong></p>
+                      <p>Intereses al 110% anual: <strong>$ {intereses.toFixed(2)} || {diasInt} días de mora.</strong></p>
                     )}
                     {/* Mostrar total actualizado */}
                     {/* Mostrar total actualizado */}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faCheck, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import NavigationBar from './NavigationBar';
 
 
@@ -23,12 +23,12 @@ const MisPagos = () => {
             try {
               const fechaPago = convertirTimestampAFechaLegible(periodo.fechaDePago)
               console.log(fechaPago)
-              return { fecha, monto: periodo.valor, fechaPago };
+              return { fecha, monto: periodo.valor, fechaPago, pagoVerificado: periodo.verificado };
             } catch (err) {
               console.log(err.message)
             }
 
-            return { fecha, monto: periodo.valor, fechaPago: "Sin datos." };
+            return { fecha, monto: periodo.valor, fechaPago: "Sin datos.", pagoVerificado: periodo.verificado };
           }));
         });
         // Establecer los pagos en el estado local
@@ -75,10 +75,14 @@ const MisPagos = () => {
                           <div key={index} className="col-md-4 mb-3">
                             <div className="card">
                               <div className="card-body">
-                                <h5 className="card-title">Pago {pago.fecha}</h5>
+                                <h5 className="card-title text-decoration-underline text-center">Pago {pago.fecha}</h5>
                                 <br />
                                 <p className="card-text"><strong>Fecha: </strong>{pago.fechaPago} </p>
                                 <p className="card-text"><strong>Monto: </strong>${pago.monto}</p>
+                                <p className="card-text">{pago.pagoVerificado === true ? "Pago asentado  " : "Pago a verificar     "}
+                                  {pago.pagoVerificado === true && <FontAwesomeIcon icon={faCheck} />}
+                                  {pago.pagoVerificado === false && <FontAwesomeIcon icon={faCircleExclamation} />}
+                                </p>
                               </div>
                             </div>
                           </div>
