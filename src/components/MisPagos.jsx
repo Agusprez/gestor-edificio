@@ -22,13 +22,13 @@ const MisPagos = () => {
             const fecha = periodo.cuotaNro ? `Cuota Nro ${periodo.cuotaNro}°` : periodo.cuotaMes;
             try {
               const fechaPago = convertirTimestampAFechaLegible(periodo.fechaDePago)
-              console.log(fechaPago)
-              return { fecha, monto: periodo.valor, fechaPago, pagoVerificado: periodo.verificado, interes: periodo.valorIntereses };
+              //  console.log(fechaPago)
+              return { fecha, monto: periodo.valorActualizado || periodo.valor, fechaPago, pagoVerificado: periodo.verificado, interes: periodo.valorIntereses };
             } catch (err) {
               console.log(err.message)
             }
 
-            return { fecha, monto: periodo.valor, fechaPago: "Sin datos.", pagoVerificado: periodo.verificado };
+            return { fecha, monto: periodo.valorActualizado || periodo.valor, fechaPago: "Sin datos.", pagoVerificado: periodo.verificado };
           }));
         });
         // Establecer los pagos en el estado local
@@ -77,7 +77,7 @@ const MisPagos = () => {
                               <div className="card-body">
                                 <h5 className="card-title text-decoration-underline text-center">Pago {pago.fecha}</h5>
                                 <br />
-                                <p className="card-text"><strong>Fecha: </strong>{pago.fechaPago} </p>
+                                <p className="card-text"><strong>Fecha de Pago: </strong>{pago.fechaPago} </p>
                                 <p className="card-text"><strong>Monto: </strong>${pago.monto}</p>
                                 <p className="card-text">{pago.pagoVerificado === true ? "Pago asentado  " : "Pago a verificar     "}
                                   {pago.pagoVerificado === true && <FontAwesomeIcon icon={faCheck} />}

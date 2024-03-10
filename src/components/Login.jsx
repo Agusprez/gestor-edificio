@@ -56,6 +56,9 @@ const Login = () => {
       } if (error.message === "Request failed with status code 401") {
         console.error("Error al iniciar sesión:", error.message)
         setError("Credenciales inválidas.")
+      } if (error.message === "Network Error") {
+        console.error("Error al iniciar sesión:", error.message)
+        setError("Sin conexion al servidor.")
       } else {
         console.error('Error al iniciar sesión:', error.message);
         setError(error.message);

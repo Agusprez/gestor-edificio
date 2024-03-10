@@ -60,7 +60,7 @@ const SubirImagen = ({ onUploadSuccess }) => {
   return (
     <div>
       <input className="btn btn-outline-secondary" disabled={cargaCompleta} type="file" onChange={handleImagenSeleccionada} />
-      <button className="btn btn-primary m-2" disabled={cargaCompleta} onClick={handleSubirImagen}>Subir Imagen</button>
+      <button type="button" className="btn btn-primary m-2" disabled={cargaCompleta} onClick={handleSubirImagen}>Subir Imagen</button>
       {/* Barra de progreso */}
       {progreso > 0 && progreso < 100 && (
         <div className="progress mt-2">

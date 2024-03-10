@@ -48,21 +48,33 @@ const Home = () => {
         </div>
       );
     } else if (userData) {
-      return (
-        <>
-          <h2 className="card-title text-center">Bienvenido, {userData.nombreCompleto}</h2>
-          <h4 className="card-title text-right text-decoration-underline">Mis datos:</h4>
-          <br />
-          <p className="card-text">Unidad Funcional Asociada: {nombreCompletoDepartamento}</p>
-          {ufData && (
-            <p className="card-text">Propietario: {ufData.propietario}</p>
-          )}
-          {typeof ufAsociadaHabilitada !== 'undefined' && (
-            <p className="card-text">Habilitado: {ufAsociadaHabilitada ? 'Sí' : 'No'}</p>
-          )}
-          {/* Agrega aquí cualquier otra información del usuario que desees mostrar */}
-        </>
-      );
+      if (userData.permisosDeAdministrador === true) {
+        return (
+          <>
+            <h2 className="card-title text-center">Bienvenido, {userData.nombreCompleto}</h2>
+            <h4 className="card-title text-right text-decoration-underline">Mis datos:</h4>
+            <br />
+            <p className="card-text">Usuario administrador</p>
+            {/* Agrega aquí cualquier otra información del usuario que desees mostrar */}
+          </>
+        );
+      } else {
+        return (
+          <>
+            <h2 className="card-title text-center">Bienvenido, {userData.nombreCompleto}</h2>
+            <h4 className="card-title text-right text-decoration-underline">Mis datos:</h4>
+            <br />
+            <p className="card-text">Unidad Funcional Asociada: {nombreCompletoDepartamento}</p>
+            {ufData && (
+              <p className="card-text">Propietario: {ufData.propietario}</p>
+            )}
+            {typeof ufAsociadaHabilitada !== 'undefined' && (
+              <p className="card-text">Habilitado: {ufAsociadaHabilitada ? 'Sí' : 'No'}</p>
+            )}
+            {/* Agrega aquí cualquier otra información del usuario que desees mostrar */}
+          </>
+        );
+      }
     } else {
       return <p>No se encontraron datos de usuario.</p>;
     }
