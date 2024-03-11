@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const NavigationBar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [usuarioAdmin, setUsuarioAdmin] = useState(false)
+  const [usuarioAdmin, setUsuarioAdmin] = useState(true)
   const ufAsoc = sessionStorage.getItem('ufAsoc');
+  const navigate = useNavigate()
 
   useEffect(() => {
     const adm = sessionStorage.getItem('adm');
@@ -14,14 +16,14 @@ const NavigationBar = () => {
     } else {
       setUsuarioAdmin(false)
     }
-  }, [usuarioAdmin]);
+  }, []);
 
 
   const handleLogout = () => {
     sessionStorage.removeItem('userId');
     sessionStorage.removeItem('ufAsoc');
     sessionStorage.removeItem('adm');
-    window.location.href = '/login';
+    navigate('/login');
   };
 
   const handleDropdownToggle = () => {
@@ -41,7 +43,14 @@ const NavigationBar = () => {
       return (
         <>
           <li>
-            Usuarios
+            <Link className='nav-link dropdown-toggle' to="#" id="navbarDropdown_adm" role="button" onClick={handleDropdownToggle}>Usuarios</Link>
+            <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown_adm">
+              <li><Link className="dropdown-item" to="/relacion-USER-UF">Habilitar relacion</Link></li>
+              <li><Link className="dropdown-item" to="/ultimos-pagos">Verificar pagos</Link></li>
+              <li><Link className="dropdown-item" to="/deuda">Carga de expensas multiple</Link></li>
+              <li><Link className="dropdown-item" to="/resolver-problemas">AMB de expensas individual</Link></li>
+              {/* Agrega aquí otras opciones según sea necesario */}
+            </ul>
           </li>
         </>
       )
