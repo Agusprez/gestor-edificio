@@ -19,15 +19,20 @@ const Home = () => {
 
         const ufAsociada = response.data.ufAsociada;
         const userHabilitado = response.data.ufAsociadaHabilitada;
+        const userADM = response.data.permisosDeAdministrador
         if (userHabilitado) {
           sessionStorage.setItem('ufAsoc', response.data.ufAsociada);
         }
+        if (userADM) {
+          sessionStorage.setItem('adm', true)
+        }
 
-        setUfAsociadaHabilitada(userHabilitado);
-        obtenerNombreDepto(ufAsociada)
-
-        const segundoEndpointResponse = await axios.get(`http://localhost:4500/UF/obtenerTodo/${ufAsociada}`);
-        setUfData(segundoEndpointResponse.data);
+        if (ufAsociada) {
+          const segundoEndpointResponse = await axios.get(`http://localhost:4500/UF/obtenerTodo/${ufAsociada}`);
+          setUfData(segundoEndpointResponse.data);
+          setUfAsociadaHabilitada(userHabilitado);
+          obtenerNombreDepto(ufAsociada)
+        }
 
         setIsLoading(false);
       } catch (error) {

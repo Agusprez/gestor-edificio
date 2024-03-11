@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const NavigationBar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [usuarioAdmin, setUsuarioAdmin] = useState(false)
   const ufAsoc = sessionStorage.getItem('ufAsoc');
+
+  useEffect(() => {
+    const adm = sessionStorage.getItem('adm');
+    if (adm === "true") {
+      setUsuarioAdmin(true)
+    } else {
+      setUsuarioAdmin(false)
+    }
+  }, [usuarioAdmin]);
+
 
   const handleLogout = () => {
     sessionStorage.removeItem('userId');
     sessionStorage.removeItem('ufAsoc');
+    sessionStorage.removeItem('adm');
     window.location.href = '/login';
   };
 
@@ -22,6 +34,48 @@ const NavigationBar = () => {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
+  console.log(usuarioAdmin)
+
+  const renderData = () => {
+    if (usuarioAdmin) {
+      return (
+        <>
+          <li>
+            Usuarios
+          </li>
+        </>
+      )
+    } else {
+      return (
+        <>
+          <li onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave} className={`nav-item dropdown ${isDropdownOpen ? 'show' : ''}`}>
+            <Link
+              className={`nav-link dropdown-toggle ${!ufAsoc ? 'disabled' : ''}`}
+              to='#'
+              id="navbarDropdown"
+              role="button"
+              onClick={handleDropdownToggle}
+
+            >
+              Mis pagos
+              {!ufAsoc && isHovered && <div className="warning    p-3 fs-5">Usuario no habilitado</div>}
+            </Link>
+            <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown">
+              <li><Link className="dropdown-item" to="/mis-pagos">Pagos registrados</Link></li>
+              <li><Link className="dropdown-item" to="/ultimos-pagos">Ver últimos pagos</Link></li>
+              <li><Link className="dropdown-item" to="/deuda">Ver deuda</Link></li>
+              <li><Link className="dropdown-item" to="/resolver-problemas">Resolver problemas de pago</Link></li>
+              {/* Agrega aquí otras opciones según sea necesario */}
+            </ul>
+          </li>
+          {/* Otros elementos de la barra de navegación */}
+
+        </>
+      )
+    }
+  }
+
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
@@ -35,28 +89,7 @@ const NavigationBar = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/home">Inicio</Link>
             </li>
-            <li onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave} className={`nav-item dropdown ${isDropdownOpen ? 'show' : ''}`}>
-              <Link
-                className={`nav-link dropdown-toggle ${!ufAsoc ? 'disabled' : ''}`}
-                to='#'
-                id="navbarDropdown"
-                role="button"
-                onClick={handleDropdownToggle}
-
-              >
-                Mis pagos
-                {!ufAsoc && isHovered && <div className="warning    p-3 fs-5">Usuario no habilitado</div>}
-              </Link>
-              <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown">
-                <li><Link className="dropdown-item" to="/mis-pagos">Pagos registrados</Link></li>
-                <li><Link className="dropdown-item" to="/ultimos-pagos">Ver últimos pagos</Link></li>
-                <li><Link className="dropdown-item" to="/deuda">Ver deuda</Link></li>
-                <li><Link className="dropdown-item" to="/resolver-problemas">Resolver problemas de pago</Link></li>
-                {/* Agrega aquí otras opciones según sea necesario */}
-              </ul>
-            </li>
-            {/* Otros elementos de la barra de navegación */}
+            {renderData()}
           </ul>
           <button className="btn btn-outline-danger" onClick={handleLogout}>Cerrar sesión</button>
         </div>
