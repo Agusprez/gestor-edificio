@@ -36,7 +36,7 @@ const NavigationBar = () => {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
-  console.log(usuarioAdmin)
+  //console.log(usuarioAdmin)
 
   const renderData = () => {
     if (usuarioAdmin) {

@@ -9,6 +9,7 @@ const RelacionUserUF = () => {
   const [datos, setDatos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,6 +27,7 @@ const RelacionUserUF = () => {
 
     fetchData();
   }, []);
+
 
   const obtenerNombreDepto = (uf) => {
     if (typeof (uf) === "number") {
@@ -56,6 +58,27 @@ const RelacionUserUF = () => {
     return nombreCompletoDPTO
   };
 
+
+  const handleToggleUpdate = async (idUsuario, newState) => {
+    console.log(idUsuario)
+    //console.log(newState)
+    try {
+      // Enviar solicitud al endpoint con el nuevo estado
+      await axios.patch(`http://localhost:4500/Usuarios/relacion-USER-UF`, { idUsuario, estadoNuevo: newState });
+
+      // Actualizar el estado local después de recibir una respuesta exitosa del servidor
+      setDatos(prevDatos => {
+        return prevDatos.map(dato => {
+          if (dato.id === idUsuario) {
+            return { ...dato, ufAsociadaHabilitada: newState };
+          }
+          return dato;
+        });
+      });
+    } catch (error) {
+      console.error('Error al actualizar el estado:', error);
+    }
+  };
   return (
     <div>
       <NavigationBar />
@@ -64,8 +87,8 @@ const RelacionUserUF = () => {
           <div className="col-md-8">
             <div className="card">
               <div className="card-body">
-                <h2>Título del componente</h2>
-                <p>Descripción del componente</p>
+                <h2 className='text-decoration-underline text-center'>Habilitación de relación</h2>
+                <p>Con este servicio, podrás activar y desactivar la autorización de los usuarios para acceder a los datos de las Unidades Funcionales.</p>
                 <br />
                 {isLoading ? (
                   <div className="d-flex align-items-center">
@@ -84,7 +107,14 @@ const RelacionUserUF = () => {
                               <div className="card-body">
                                 <h5 className="card-title">{dato.nombreCompleto}</h5>
                                 <p className="card-text">{obtenerNombreDepto(UF)}</p>
-                                <ToggleSwitch ufAsociadahabilitada={dato.ufAsociadaHabilitada} />
+                                <p className="card-text">{dato.email}</p>
+
+                                <ToggleSwitch
+                                  key={dato.id} // Asegúrate de tener una propiedad de identificación única en cada objeto
+                                  idUsuario={dato.id} // Pasar el id como prop al ToggleSwitch
+                                  ufAsociadahabilitada={dato.ufAsociadaHabilitada}
+                                  onUpdate={(newState) => handleToggleUpdate(dato.id, false)} // Usar el id en la función onUpdate
+                                />
                               </div>
                             </div>
                           );
@@ -103,7 +133,12 @@ const RelacionUserUF = () => {
                               <div className="card-body">
                                 <h5 className="card-title">{dato.nombreCompleto}</h5>
                                 <p className="card-text">{obtenerNombreDepto(UF)}</p>
-                                <ToggleSwitch ufAsociadahabilitada={dato.ufAsociadaHabilitada} />
+                                <p className="card-text">{dato.email}</p>
+                                <ToggleSwitch
+                                  ufAsociadahabilitada={dato.ufAsociadaHabilitada}
+                                  idUsuario={dato.id}
+                                  onUpdate={(newState) => handleToggleUpdate(dato.id, true)} // Usar el id en la función onUpdate
+                                />
                               </div>
                             </div>
                           );
