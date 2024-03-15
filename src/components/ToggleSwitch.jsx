@@ -15,7 +15,7 @@ const ToggleSwitch = ({ idUsuario, ufAsociadahabilitada, onUpdate }) => {
       <Form.Check
         type="switch"
         id="ufAsociadahabilitada-switch"
-        label={ufAsociadahabilitada ? "Usuario habilitado" : "Usuario sin autorización"}
+        label={ufAsociadahabilitada ? "Usuario habilitado" : 'Usuario sin autorización'}
         onClick={handleToggle}
         defaultChecked={ufAsociadahabilitada} // Establece defaultChecked en función de ufAsociadahabilitada
       />

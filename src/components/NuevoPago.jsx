@@ -59,7 +59,7 @@ const NuevoPago = () => {
       let valorActualizado
 
       const cuota = expensaData.cuotaMes || expensaData.cuotaNro
-      const valorCuota = (expensaData.valor).toFixed(2)
+      const valorCuota = (expensaData.valor)
       setCuota(cuota)
       setValorCuota(valorCuota)
       // Verificar si el pago está en término
@@ -70,7 +70,8 @@ const NuevoPago = () => {
         valorActualizado = expensaData.valor
       } else {
         setPagoEnTermino(false);
-        valorActualizado = interesesCalculados + expensaData.valor
+        valorActualizado = interesesCalculados + Number(expensaData.valor)
+
       }
       setValorActualizado(valorActualizado)
 
@@ -178,7 +179,7 @@ const NuevoPago = () => {
                     <form onSubmit={handleSubmit}>
                       <div className="mb-3">
                         <p>Seleccione el comprobante de transferencia:</p>
-                        <SubirImagen onUploadSuccess={handleUploadSuccess} />
+                        <SubirImagen required onUploadSuccess={handleUploadSuccess} />
                       </div>
                       {isLoadingSubmit ? (
                         // Si isLoadingSubmit es true, mostrar el spinner
