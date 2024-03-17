@@ -94,3 +94,7 @@ div.card {
   z-index: 999;
   /* Asegurarse de que esté en la parte superior */
 }
+
+.overflow-visible {
+  overflow: visible !important;
+}

@@ -61,11 +61,11 @@ const VerificarPagos = () => {
         {expensas.length === 0 ? (
           <p className="warning p-3 fs-5">No hay pagos disponibles.</p>
         ) : (
-          <Row className='h-100'>
+          <Row className=''>
             {expensas.map((expensa, index) => (
-              <Col key={index} className='col-md-12 h-100 mb-3'>
-                <Card >
-                  <Card.Body>
+              <Col key={index} className='col-md-12 mb-3 '>
+                <Card className="container-fluid " style={{ backgroundColor: "red", overflow: "hidden" }} >
+                  <Card.Body className="">
                     <h5 className='text-center'><strong>{expensa.propietario}</strong></h5>
                     <h6 className='text-center'><strong>{obtenerNombreDepto(expensa.idUF)}</strong></h6>
                     {expensa.expensas.map((periodo, periodoIndex) => (
@@ -99,6 +99,7 @@ const VerificarPagos = () => {
                         </Row>
                       </div>
                     ))}
+                    <p>Hola</p>
                   </Card.Body>
                 </Card>
               </Col>
