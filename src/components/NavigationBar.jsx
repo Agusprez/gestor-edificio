@@ -5,18 +5,18 @@ import { useNavigate } from 'react-router-dom';
 const NavigationBar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [usuarioAdmin, setUsuarioAdmin] = useState(true)
+  const [usuarioAdmin, setUsuarioAdmin] = useState(null)
   const ufAsoc = sessionStorage.getItem('ufAsoc');
+  const adm = sessionStorage.getItem('adm');
   const navigate = useNavigate()
 
   useEffect(() => {
-    const adm = sessionStorage.getItem('adm');
     if (adm === "true") {
       setUsuarioAdmin(true)
     } else {
       setUsuarioAdmin(false)
     }
-  }, []);
+  }, [adm]);
 
 
   const handleLogout = () => {
@@ -46,15 +46,19 @@ const NavigationBar = () => {
             <Link className='nav-link dropdown-toggle' to="#" id="navbarDropdown_adm" role="button" onClick={handleDropdownToggle}>Usuarios</Link>
             <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown_adm">
               <li><Link className="dropdown-item" to="/relacion-USER-UF">Habilitar relacion</Link></li>
-              <li><Link className="dropdown-item" to="/ultimos-pagos">Verificar pagos</Link></li>
-              <li><Link className="dropdown-item" to="/deuda">Carga de expensas multiple</Link></li>
-              <li><Link className="dropdown-item" to="/resolver-problemas">AMB de expensas individual</Link></li>
+              <li><Link className="dropdown-item" to="/verificar-pagos">Verificar pagos</Link></li>
+              <li><Link className="dropdown-item" to="/#">Carga de expensas multiple</Link></li>
+              <li><Link className="dropdown-item" to="/#">AMB de expensas individual</Link></li>
               {/* Agrega aquí otras opciones según sea necesario */}
             </ul>
           </li>
         </>
       )
-    } else {
+    } else if (usuarioAdmin === null) {
+      <></>
+    }
+
+    else {
       return (
         <>
           <li onMouseEnter={handleMouseEnter}

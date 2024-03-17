@@ -5,6 +5,36 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import NavigationBar from './NavigationBar';
 import ToggleSwitch from './ToggleSwitch';
 
+const obtenerNombreDepto = (uf) => {
+  if (typeof (uf) === "number") {
+    uf = uf.toString()
+  }
+  const descripcionesPlanta = {
+    "0": "Planta Baja",
+    "1": "1er Piso",
+    "2": "2do Piso",
+    "3": "3er Piso",
+    "4": "4to Piso",
+    "5": "Cochera"
+  };
+
+  const planta = uf.charAt(0);
+  const dpto = uf.charAt(2);
+
+  const nombrePlanta = descripcionesPlanta[planta] || "Planta Desconocida";
+  const nombreDpto = ` - Dpto ${dpto}°`
+  let nombreCompletoDPTO = nombrePlanta + nombreDpto
+
+  if (uf === "501" || uf === "501" || uf === "502") {
+    nombreCompletoDPTO = "Cochera"
+  } else if (uf === "504") {
+    nombreCompletoDPTO = "Local"
+  }
+
+  return nombreCompletoDPTO
+};
+
+
 const RelacionUserUF = () => {
   const [datos, setDatos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -29,34 +59,6 @@ const RelacionUserUF = () => {
   }, []);
 
 
-  const obtenerNombreDepto = (uf) => {
-    if (typeof (uf) === "number") {
-      uf = uf.toString()
-    }
-    const descripcionesPlanta = {
-      "0": "Planta Baja",
-      "1": "1er Piso",
-      "2": "2do Piso",
-      "3": "3er Piso",
-      "4": "4to Piso",
-      "5": "Cochera"
-    };
-
-    const planta = uf.charAt(0);
-    const dpto = uf.charAt(2);
-
-    const nombrePlanta = descripcionesPlanta[planta] || "Planta Desconocida";
-    const nombreDpto = ` - Dpto ${dpto}°`
-    let nombreCompletoDPTO = nombrePlanta + nombreDpto
-
-    if (uf === "501" || uf === "501" || uf === "502") {
-      nombreCompletoDPTO = "Cochera"
-    } else if (uf === "504") {
-      nombreCompletoDPTO = "Local"
-    }
-
-    return nombreCompletoDPTO
-  };
 
 
   const handleToggleUpdate = async (idUsuario, newState) => {
@@ -156,5 +158,5 @@ const RelacionUserUF = () => {
     </div>
   );
 };
-
+export { obtenerNombreDepto }
 export default RelacionUserUF;
