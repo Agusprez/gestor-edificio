@@ -1,19 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col, Card, Button } from 'react-bootstrap';
 import NavigationBar from './NavigationBar';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { obtenerNombreDepto } from './RelacionUserUF'
+import VerificarPagoInd from './VerificarPagoInd';
 
 const VerificarPagos = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [expensasParaVerificar, setExpensasParaVerificar] = useState([])
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const [datosDelPago, setDatosDelPago] = useState(null);
+  const [datosDeUF, setDatosDeUF] = useState(null);
 
   //Voy a querer mostrar cards donde las expensas aparezcan como pagas y tengan la propiedad verificado en false. LISTO
   //quiero que muestre la unidad Funcional, el valor actualizado, el valor original, dias de intereses si existe, fecha de pago y fecha de vencimiento, un link para descargar el comprobante que subieron y un boton para confirmar el pago.
   // UF/Pagos
   //una vez confirmado el pago
+  const handleVerificarPago = (datosDelPago, datosDeUf) => {
+    // Aquí podrías cargar los datos del pago desde donde sea necesario
+    const datosPago = datosDelPago
+    //console.log(datosDeUf)
+    const datosUf = {
+      uf: obtenerNombreDepto(datosDeUf.idUF),
+      propietario: datosDeUf.propietario
+    }
+    setDatosDelPago(datosPago);
+    setDatosDeUF(datosUf);
+    //console.log(datosDeUF)
+    setMostrarModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setMostrarModal(false);
+  };
   useEffect(() => {
     const expensasPagadas = async () => {
       try {
@@ -61,10 +82,10 @@ const VerificarPagos = () => {
         {expensas.length === 0 ? (
           <p className="warning p-3 fs-5">No hay pagos disponibles.</p>
         ) : (
-          <Row className=''>
+          <Row>
             {expensas.map((expensa, index) => (
               <Col key={index} className='col-md-12 mb-3 '>
-                <Card className="container-fluid " style={{ backgroundColor: "red", overflow: "hidden" }} >
+                <Card className="container-fluid">
                   <Card.Body className="">
                     <h5 className='text-center'><strong>{expensa.propietario}</strong></h5>
                     <h6 className='text-center'><strong>{obtenerNombreDepto(expensa.idUF)}</strong></h6>
@@ -74,8 +95,8 @@ const VerificarPagos = () => {
                         <p><strong className="text-decoration-underline">Tipo:</strong> {periodo.tipo}</p>
                         <Row >
                           {periodo.periodosPagados.map((pagado, pagoIndex) => (
-                            <Col className='col-md-4 mb-3'>
-                              <Card key={pagoIndex}>
+                            <Col key={pagoIndex} className='col-md-4 mb-3'>
+                              <Card >
                                 <Card.Body>
                                   <p>Cuota: {pagado.cuotaNro || pagado.cuotaMes}</p>
                                   <p>Valor: {pagado.valor}</p>
@@ -89,6 +110,10 @@ const VerificarPagos = () => {
                                     // Código que se ejecutará si pagado.diasIntereses es menor o igual a 0
                                     <p>Pago en término</p>
                                   )}
+                                  <div className="text-center">
+                                    <Button onClick={() => handleVerificarPago(pagado, expensa)}
+                                    >Verificar pago</Button>
+                                  </div>
                                   {/* Agrega aquí cualquier otra información que desees mostrar */}
                                 </Card.Body>
                               </Card>
@@ -99,7 +124,6 @@ const VerificarPagos = () => {
                         </Row>
                       </div>
                     ))}
-                    <p>Hola</p>
                   </Card.Body>
                 </Card>
               </Col>
@@ -131,6 +155,13 @@ const VerificarPagos = () => {
             </Card>
           </Col>
         </Row>
+        {mostrarModal && (
+          <VerificarPagoInd
+            datosDelPago={datosDelPago}
+            datosDeUF={datosDeUF}
+            onClose={handleCloseModal}
+          />
+        )}
       </div>
     </div >
   )

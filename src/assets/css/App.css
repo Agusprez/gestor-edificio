@@ -98,3 +98,37 @@ div.card {
 .overflow-visible {
   overflow: visible !important;
 }
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  /* Fondo oscurecido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  width: 80vw;
+  /* Ancho del modal al 60% del ancho de la ventana */
+  max-width: 800px;
+  /* Opcional: para limitar el ancho máximo */
+  background-color: #f5f5dc !important;
+  /* Color blanco crudo */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  color: #333;
+  /* Color del texto */
+}
+
+ul,
+ol {
+  list-style-type: none;
+}
+
+/* Ajusta los estilos según sea necesario */
