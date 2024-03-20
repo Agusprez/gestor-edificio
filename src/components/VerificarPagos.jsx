@@ -23,7 +23,7 @@ const VerificarPagos = () => {
     const datosPago = datosDelPago
     //console.log(datosDeUf)
     const datosUf = {
-      uf: obtenerNombreDepto(datosDeUf.idUF),
+      uf: datosDeUf.idUF,
       propietario: datosDeUf.propietario
     }
     setDatosDelPago(datosPago);
@@ -53,18 +53,26 @@ const VerificarPagos = () => {
       }
     }
     expensasPagadas()
+
     function buscarVerificado(objeto) {
       // Si el objeto es un array, iterar sobre cada elemento y llamar recursivamente a la función
       if (Array.isArray(objeto)) {
         return objeto.some(item => buscarVerificado(item));
       }
-      // Si el objeto es un objeto, iterar sobre cada propiedad y llamar recursivamente a la función
+      // Si el objeto es un objeto, verificar si tiene una propiedad 'verificado' y su valor es true
       if (typeof objeto === 'object' && objeto !== null) {
+        // Verificar si la propiedad 'verificado' existe y su valor es true
+        if (objeto.hasOwnProperty('verificado') && objeto.verificado === false && objeto.hasOwnProperty('pagado') && objeto.pagado === true) {
+          return true;
+        }
+        // Si no se encuentra 'verificado', iterar sobre cada propiedad y llamar recursivamente a la función
         return Object.values(objeto).some(valor => buscarVerificado(valor));
       }
-      // Si el objeto es un valor, verificar si es 'verificado'
-      return objeto === true;
+      // Si el objeto es un valor, retornar false
+      return false;
     }
+
+
   }, []);
 
 
@@ -85,40 +93,45 @@ const VerificarPagos = () => {
           <Row>
             {expensas.map((expensa, index) => (
               <Col key={index} className='col-md-12 mb-3 '>
+                {console.log(expensa)}
                 <Card className="container-fluid">
                   <Card.Body className="">
                     <h5 className='text-center'><strong>{expensa.propietario}</strong></h5>
                     <h6 className='text-center'><strong>{obtenerNombreDepto(expensa.idUF)}</strong></h6>
+                    {console.log(expensa)}
                     {expensa.expensas.map((periodo, periodoIndex) => (
 
                       <div key={periodoIndex}>
                         <p><strong className="text-decoration-underline">Tipo:</strong> {periodo.tipo}</p>
                         <Row >
                           {periodo.periodosPagados.map((pagado, pagoIndex) => (
+
                             <Col key={pagoIndex} className='col-md-4 mb-3'>
-                              <Card >
-                                <Card.Body>
-                                  <p>Cuota: {pagado.cuotaNro || pagado.cuotaMes}</p>
-                                  <p>Valor: {pagado.valor}</p>
-                                  <p>Fecha de pago: {new Date(pagado.fechaDePago._seconds * 1000).toLocaleDateString()}</p>
 
-                                  <p>Fecha de Vencimiento: {new Date(pagado.fechaDeVencimiento?._seconds * 1000).toLocaleDateString()}</p>
-                                  {pagado.diasIntereses > 0 ? (
-                                    // Código que se ejecutará si pagado.diasIntereses es mayor que 0
-                                    <p>Mora de {pagado.diasIntereses} días.</p>
-                                  ) : (
-                                    // Código que se ejecutará si pagado.diasIntereses es menor o igual a 0
-                                    <p>Pago en término</p>
-                                  )}
-                                  <div className="text-center">
-                                    <Button onClick={() => handleVerificarPago(pagado, expensa)}
-                                    >Verificar pago</Button>
-                                  </div>
-                                  {/* Agrega aquí cualquier otra información que desees mostrar */}
-                                </Card.Body>
-                              </Card>
+                              {!pagado.verificado && ( // Mostrar la tarjeta solo si el pago no está verificado
+                                <Card >
+                                  <Card.Body>
+                                    <p>Cuota: {pagado.cuotaNro || pagado.cuotaMes}</p>
+                                    <p>Valor: {pagado.valor}</p>
+                                    <p>Fecha de pago: {new Date(pagado.fechaDePago._seconds * 1000).toLocaleDateString()}</p>
 
+                                    <p>Fecha de Vencimiento: {new Date(pagado.fechaDeVencimiento?._seconds * 1000).toLocaleDateString()}</p>
+                                    {pagado.diasIntereses > 0 ? (
+                                      // Código que se ejecutará si pagado.diasIntereses es mayor que 0
+                                      <p>Mora de {pagado.diasIntereses} días.</p>
+                                    ) : (
+                                      // Código que se ejecutará si pagado.diasIntereses es menor o igual a 0
+                                      <p>Pago en término</p>
+                                    )}
+                                    <div className="text-center">
+                                      <Button onClick={() => handleVerificarPago(pagado, expensa)}
+                                      >Verificar pago</Button>
+                                    </div>
+                                    {/* Agrega aquí cualquier otra información que desees mostrar */}
+                                  </Card.Body>
+                                </Card>
 
+                              )}
                             </Col>
                           ))}
                         </Row>
