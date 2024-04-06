@@ -13,6 +13,7 @@ import MisDeudas from './components/MisDeudas';
 import NuevoPago from './components/NuevoPago';
 import RelacionUserUF from './components/RelacionUserUF';
 import VerificarPagos from './components/VerificarPagos';
+import AltaIndividual from './components/ABM_Expensas/AltaIndividual';
 //import CrearUsuario from './components/CrearUsuario';
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/nuevo-pago" element={<NuevoPago />} />
           <Route path="/relacion-USER-UF" element={<RelacionUserUF />} />
           <Route path="/verificar-pagos" element={<VerificarPagos />} />
+          <Route path="/alta-expensa" element={<AltaIndividual />} />
 
 
 

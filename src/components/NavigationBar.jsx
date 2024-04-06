@@ -48,7 +48,8 @@ const NavigationBar = () => {
               <li><Link className="dropdown-item" to="/relacion-USER-UF">Habilitar relacion</Link></li>
               <li><Link className="dropdown-item" to="/verificar-pagos">Verificar pagos</Link></li>
               <li><Link className="dropdown-item" to="/#">Carga de expensas multiple</Link></li>
-              <li><Link className="dropdown-item" to="/#">AMB de expensas individual</Link></li>
+              <li><Link className="dropdown-item" to="/alta-expensa">Alta de expensas individual</Link></li>
+              <li><Link className="dropdown-item" to="/baja-modificacion-expensa">Modificacion o baja de expensas individual</Link></li>
               {/* Agrega aquí otras opciones según sea necesario */}
             </ul>
           </li>
