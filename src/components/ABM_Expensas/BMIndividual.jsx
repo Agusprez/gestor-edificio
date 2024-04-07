@@ -51,7 +51,7 @@ const BajaModificacion = () => {
         // Verificar si la eliminación fue exitosa
         if (response.status === 200) {
           // Realizar acciones adicionales si es necesario
-          console.log('Datos enviados correctamente');
+          //console.log('Datos enviados correctamente');
           setMessage('Unidad Funcional eliminada correctamente');
           setTimeout(() => {
             navigate('/home');
@@ -62,12 +62,12 @@ const BajaModificacion = () => {
         }
       } else {
         // Si el usuario cancela la eliminación, mostrar un mensaje
-        console.log('Eliminación cancelada por el usuario');
+        //console.log('Eliminación cancelada por el usuario');
         setMessage('Eliminación cancelada por el usuario');
       }
     } catch (error) {
       // Mostrar un mensaje de error si ocurre algún problema
-      console.error('Error:', error);
+      //console.error('Error:', error);
       setMessage('Error al procesar la solicitud');
     }
   };
@@ -81,13 +81,13 @@ const BajaModificacion = () => {
       // Si el usuario confirma la eliminación, proceder con la eliminación
       if (confirmacion) {
         const data = { idExpensa, unidadFuncional, tipoCuota, nombreCuota, valorCuota, fechaDeVencimiento };
-        console.log(data)
+        //console.log(data)
         const response = await axios.patch('http://localhost:4500/UF/editarExpensa', data);
 
         // Verificar si la eliminación fue exitosa
         if (response.status === 200) {
           // Realizar acciones adicionales si es necesario
-          console.log('Datos enviados correctamente');
+          //console.log('Datos enviados correctamente');
 
           setMessage('Unidad Funcional modificada correctamente');
           setTimeout(() => {
@@ -99,7 +99,7 @@ const BajaModificacion = () => {
         }
       } else {
         // Si el usuario cancela la eliminación, mostrar un mensaje
-        console.log('Modificacion cancelada por el usuario');
+        //console.log('Modificacion cancelada por el usuario');
         setMessage('Modificacion cancelada por el usuario');
       }
     } catch (error) {
@@ -138,27 +138,27 @@ const BajaModificacion = () => {
         setPropietario(propietario)
         if (expensas.length > 0) {
           // El array contiene elementos
-          console.log('El array de expensas contiene elementos');
+          //console.log('El array de expensas contiene elementos');
 
           // Verificar si hay periodos no pagados para el tipo de cuota seleccionado
           const expensaSeleccionada = expensas.find(expensa => expensa.tipo === tipoCuota);
           if (expensaSeleccionada) {
             if (expensaSeleccionada.periodosNoPagados.length > 0) {
-              console.log(`Hay periodos no pagados para las expensas ${tipoCuota}`);
-              console.log('Expensas:', expensaSeleccionada.periodosNoPagados);
+              //console.log(`Hay periodos no pagados para las expensas ${tipoCuota}`);
+              //console.log('Expensas:', expensaSeleccionada.periodosNoPagados);
               setExpensas(expensaSeleccionada.periodosNoPagados)
             } else {
-              console.log(`No hay periodos no pagados para las expensas ${tipoCuota}`);
+              //console.log(`No hay periodos no pagados para las expensas ${tipoCuota}`);
               setExpensas([])
             }
           } else {
-            console.log(`No hay expensas disponibles para las expensas ${tipoCuota}`);
+            //console.log(`No hay expensas disponibles para las expensas ${tipoCuota}`);
             setExpensas([])
           }
           setIsLoading(false)
         } else {
           // El array de expensas está vacío
-          console.log('El array de expensas está vacío');
+          //console.log('El array de expensas está vacío');
         }
       } catch (error) {
         console.error('Error al obtener las expensas disponibles:', error.message);
@@ -172,7 +172,7 @@ const BajaModificacion = () => {
 
   const handleChangeValorCuota = (e) => {
     setValorCuota(e.target.value)
-    console.log(e.target.value)
+    //console.log(e.target.value)
   }
 
   const handleChangeFechaVencimiento = (e) => {

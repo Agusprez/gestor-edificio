@@ -93,12 +93,10 @@ const VerificarPagos = () => {
           <Row>
             {expensas.map((expensa, index) => (
               <Col key={index} className='col-md-12 mb-3 '>
-                {console.log(expensa)}
                 <Card className="container-fluid">
                   <Card.Body className="">
                     <h5 className='text-center'><strong>{expensa.propietario}</strong></h5>
                     <h6 className='text-center'><strong>{obtenerNombreDepto(expensa.idUF)}</strong></h6>
-                    {console.log(expensa)}
                     {expensa.expensas.map((periodo, periodoIndex) => (
 
                       <div key={periodoIndex}>

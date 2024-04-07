@@ -55,7 +55,7 @@ const VerificarPagoInd = ({ datosDelPago, datosDeUF, onClose }) => {
       const response = await axios.patch(url);
 
       if (response.status === 200) {
-        console.log('La solicitud PATCH fue exitosa');
+        //console.log('La solicitud PATCH fue exitosa');
         //onClose()
         if (response.data && response.data.message) {
           setMensaje(response.data.message);
@@ -73,7 +73,7 @@ const VerificarPagoInd = ({ datosDelPago, datosDeUF, onClose }) => {
   };
 
 
-  console.log(idPago)
+  //console.log(idPago)
   return (
     <div className="modal-overlay">
       <div className="modal-content">
