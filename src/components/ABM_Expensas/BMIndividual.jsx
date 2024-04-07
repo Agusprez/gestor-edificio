@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavigationBar from '../NavigationBar';
 import { Form, Modal, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 const BajaModificacion = () => {
   const [unidadFuncionalOptions, setUnidadFuncionalOptions] = useState([]);
@@ -130,6 +132,11 @@ const BajaModificacion = () => {
                       <option value="ExpensasExtraordinarias">Expensas Extraordinarias</option>
                     </Form.Select>
                   </Form.Group>
+                  {expensas.length === 0 && (
+                    <>
+                      <br />
+                      <p className='text-danger'><FontAwesomeIcon icon={faCircleXmark} /> No hay expensas disponibles.</p>
+                    </>)}
                   {expensas.length > 0 && (
                     <Form.Group className="mb-3 text-center">
                       <Form.Label ><h3 className='text-decoration-underline'>Expensas Disponibles </h3></Form.Label>
