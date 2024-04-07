@@ -51,7 +51,7 @@ const NavigationBar = () => {
               <NavDropdown.Item as={Link} to="/mis-pagos">Pagos registrados</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/ultimos-pagos">Ver últimos pagos</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/deuda">Ver deuda</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/resolver-problemas">Resolver problemas de pago</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/resolver-pagos">Resolver problemas de pago</NavDropdown.Item>
               {/* Agrega aquí otras opciones según sea necesario */}
             </NavDropdown>
           )}
