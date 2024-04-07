@@ -5,16 +5,16 @@ import { useNavigate } from 'react-router-dom';
 const NavigationBar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [usuarioAdmin, setUsuarioAdmin] = useState(null)
+  const [usuarioAdmin, setUsuarioAdmin] = useState(null);
   const ufAsoc = sessionStorage.getItem('ufAsoc');
   const adm = sessionStorage.getItem('adm');
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (adm === "true") {
-      setUsuarioAdmin(true)
+      setUsuarioAdmin(true);
     } else {
-      setUsuarioAdmin(false)
+      setUsuarioAdmin(false);
     }
   }, [adm]);
 
@@ -36,7 +36,6 @@ const NavigationBar = () => {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
-  //console.log(usuarioAdmin)
 
   const renderData = () => {
     if (usuarioAdmin) {
@@ -49,17 +48,15 @@ const NavigationBar = () => {
               <li><Link className="dropdown-item" to="/verificar-pagos">Verificar pagos</Link></li>
               <li><Link className="dropdown-item" to="/#">Carga de expensas multiple</Link></li>
               <li><Link className="dropdown-item" to="/alta-expensa">Alta de expensas individual</Link></li>
-              <li><Link className="dropdown-item" to="/baja-modificacion-expensa">Modificacion o baja de expensas individual</Link></li>
+              <li><Link className="dropdown-item" to="/baja-modif-expensa">Modificacion o baja de expensas individual</Link></li>
               {/* Agrega aquí otras opciones según sea necesario */}
             </ul>
           </li>
         </>
-      )
+      );
     } else if (usuarioAdmin === null) {
-      <></>
-    }
-
-    else {
+      return <></>;
+    } else {
       return (
         <>
           <li onMouseEnter={handleMouseEnter}
@@ -84,18 +81,16 @@ const NavigationBar = () => {
             </ul>
           </li>
           {/* Otros elementos de la barra de navegación */}
-
         </>
-      )
+      );
     }
-  }
-
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
       <div className="container">
         <Link className="navbar-brand" to="#">Edificio Rosa I</Link>
-        <button className="navbar-toggler" disabled type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
