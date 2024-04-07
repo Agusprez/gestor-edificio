@@ -15,6 +15,7 @@ import RelacionUserUF from './components/RelacionUserUF';
 import VerificarPagos from './components/VerificarPagos';
 import AltaIndividual from './components/ABM_Expensas/AltaIndividual';
 import BajaModificacion from './components/ABM_Expensas/BMIndividual';
+import AltaMultiple from './components/ABM_Expensas/AltaMultiple';
 //import CrearUsuario from './components/CrearUsuario';
 
 function App() {
@@ -35,8 +36,9 @@ function App() {
           <Route path="/nuevo-pago" element={<NuevoPago />} />
           <Route path="/relacion-USER-UF" element={<RelacionUserUF />} />
           <Route path="/verificar-pagos" element={<VerificarPagos />} />
-          <Route path="/alta-expensa" element={<AltaIndividual />} />
           <Route path="/baja-modif-expensa" element={<BajaModificacion />} />
+          <Route path="/alta-expensa" element={<AltaIndividual />} />
+          <Route path="/alta-expensa-multiple" element={<AltaMultiple />} />
 
 
 

@@ -52,13 +52,19 @@ const BajaModificacion = () => {
         if (response.status === 200) {
           // Realizar acciones adicionales si es necesario
           //console.log('Datos enviados correctamente');
-          setMessage('Unidad Funcional eliminada correctamente');
+          setMessage('Expensa eliminada correctamente');
           setTimeout(() => {
-            navigate('/home');
+            handleModalClose()
+            setUnidadFuncional("")
+            setTipoCuota("")
+            setExpensas([])
+            setMessage(undefined)
+
           }, 3000)
+
         } else {
           // Mostrar un mensaje de error si la eliminación no fue exitosa
-          setMessage('Error al eliminar la Unidad Funcional');
+          setMessage('Error al eliminar la Expensa');
         }
       } else {
         // Si el usuario cancela la eliminación, mostrar un mensaje
@@ -89,13 +95,17 @@ const BajaModificacion = () => {
           // Realizar acciones adicionales si es necesario
           //console.log('Datos enviados correctamente');
 
-          setMessage('Unidad Funcional modificada correctamente');
+          setMessage('Expensa modificada correctamente');
           setTimeout(() => {
-            navigate('/home');
+            handleModalClose()
+            setUnidadFuncional("")
+            setTipoCuota("")
+            setExpensas([])
+            setMessage(undefined)
           }, 3000)
         } else {
           // Mostrar un mensaje de error si la eliminación no fue exitosa
-          setMessage('Error al modificar la Unidad Funcional');
+          setMessage('Error al modificar la Expensa');
         }
       } else {
         // Si el usuario cancela la eliminación, mostrar un mensaje
