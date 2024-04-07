@@ -11,33 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.navbar-menu {
-  display: none;
-  /* Ocultar el menú desplegable por defecto */
-}
-
-.navbar-menu.open {
-  display: block;
-  /* Mostrar el menú desplegable cuando está abierto */
-}
-
-/* Estilos adicionales para el menú y los elementos del menú */
-/* Puedes personalizar estos estilos según sea necesario */
-.navbar-items {
-  background-color: #f8f9fa;
-  border: 1px solid #ced4da;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.navbar-items a {
-  display: block;
-  padding: 5px 0;
-  color: #212529;
-  text-decoration: none;
-}
-
-.navbar-items a:hover {
-  background-color: #e9ecef;
-}

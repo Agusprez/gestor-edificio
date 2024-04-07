@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
 const NavigationBar = () => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [usuarioAdmin, setUsuarioAdmin] = useState(null);
   const ufAsoc = sessionStorage.getItem('ufAsoc');
   const adm = sessionStorage.getItem('adm');
@@ -18,7 +17,6 @@ const NavigationBar = () => {
     }
   }, [adm]);
 
-
   const handleLogout = () => {
     sessionStorage.removeItem('userId');
     sessionStorage.removeItem('ufAsoc');
@@ -26,84 +24,43 @@ const NavigationBar = () => {
     navigate('/login');
   };
 
-  const handleDropdownToggle = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
-
-  const renderData = () => {
-    if (usuarioAdmin) {
-      return (
-        <>
-          <li>
-            <Link className='nav-link dropdown-toggle' to="#" id="navbarDropdown_adm" role="button" onClick={handleDropdownToggle}>Usuarios</Link>
-            <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown_adm">
-              <li><Link className="dropdown-item" to="/relacion-USER-UF">Habilitar relacion</Link></li>
-              <li><Link className="dropdown-item" to="/verificar-pagos">Verificar pagos</Link></li>
-              <li><Link className="dropdown-item" to="/#">Carga de expensas multiple</Link></li>
-              <li><Link className="dropdown-item" to="/alta-expensa">Alta de expensas individual</Link></li>
-              <li><Link className="dropdown-item" to="/baja-modif-expensa">Modificacion o baja de expensas individual</Link></li>
-              {/* Agrega aquí otras opciones según sea necesario */}
-            </ul>
-          </li>
-        </>
-      );
-    } else if (usuarioAdmin === null) {
-      return <></>;
-    } else {
-      return (
-        <>
-          <li onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave} className={`nav-item dropdown ${isDropdownOpen ? 'show' : ''}`}>
-            <Link
-              className={`nav-link dropdown-toggle ${!ufAsoc ? 'disabled' : ''}`}
-              to='#'
-              id="navbarDropdown"
-              role="button"
-              onClick={handleDropdownToggle}
-
-            >
-              Mis pagos
-              {!ufAsoc && isHovered && <div className="warning    p-3 fs-5">Usuario no habilitado</div>}
-            </Link>
-            <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown">
-              <li><Link className="dropdown-item" to="/mis-pagos">Pagos registrados</Link></li>
-              <li><Link className="dropdown-item" to="/ultimos-pagos">Ver últimos pagos</Link></li>
-              <li><Link className="dropdown-item" to="/deuda">Ver deuda</Link></li>
-              <li><Link className="dropdown-item" to="/resolver-problemas">Resolver problemas de pago</Link></li>
-              {/* Agrega aquí otras opciones según sea necesario */}
-            </ul>
-          </li>
-          {/* Otros elementos de la barra de navegación */}
-        </>
-      );
-    }
-  };
-
   return (
-    <nav className="navbar navbar-expand-lg navbar-light">
-      <div className="container">
-        <Link className="navbar-brand" to="#">Edificio Rosa I</Link>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link className="nav-link" to="/home">Inicio</Link>
-            </li>
-            {renderData()}
-          </ul>
+    <Navbar collapseOnSelect className='px-5' expand="md" variant="light" style={{ backgroundColor: '#f5f5dc' }}>
+      <Navbar.Brand as={Link} to="/">Edificio Rosa I</Navbar.Brand>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="me-auto">
+          <Nav.Link as={Link} to="/home">Inicio</Nav.Link>
+          {usuarioAdmin && (
+            <>
+              <NavDropdown title="Usuarios" id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to="/relacion-USER-UF">Habilitar relacion</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/verificar-pagos">Verificar pagos</NavDropdown.Item>
+                {/* Agrega aquí otras opciones según sea necesario */}
+              </NavDropdown>
+              <NavDropdown title="Expensas" id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to="/#">Carga de expensas multiple</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/alta-expensa">Alta de expensas individual</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/baja-modif-expensa">Modificacion o baja de expensas individual</NavDropdown.Item>
+                {/* Agrega aquí otras opciones según sea necesario */}
+              </NavDropdown>
+            </>
+          )}
+          {!usuarioAdmin && (
+            <NavDropdown title="Mis pagos" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/mis-pagos">Pagos registrados</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/ultimos-pagos">Ver últimos pagos</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/deuda">Ver deuda</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/resolver-problemas">Resolver problemas de pago</NavDropdown.Item>
+              {/* Agrega aquí otras opciones según sea necesario */}
+            </NavDropdown>
+          )}
+        </Nav>
+        <Nav>
           <button className="btn btn-outline-danger" onClick={handleLogout}>Cerrar sesión</button>
-        </div>
-      </div>
-    </nav>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
   );
 };
 
