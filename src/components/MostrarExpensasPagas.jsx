@@ -29,13 +29,13 @@ const Pagos = () => {
             expensa.periodosPagados.forEach(periodo => {
               // Construir el objeto de pago
               const propietario = uf.propietario
-              const fechaDePago = convertirTimestampAFechaLegible(periodo.fechaDePago)
-              const fechaDeVto = convertirTimestampAFechaLegible(periodo.fechaDeVencimiento)
+              //const fechaDePago = convertirTimestampAFechaLegible(periodo.fechaDePago)
+              //const fechaDeVto = convertirTimestampAFechaLegible(periodo.fechaDeVencimiento)
               const fecha = periodo.cuotaNro ? `Cuota Nro ${periodo.cuotaNro}°` : periodo.cuotaMes;
               const idDeuda = periodo.idExpensa; // Cambiar a idExpensa si es correcto
               const monto = periodo.valor;
               const tipo = periodo.cuotaNro ? "Exp. Extraordinarias" : "Exp. Mensuales";
-              pagosData.push({ fecha, monto, idDeuda, propietario, tipo, fechaDePago, fechaDeVto });
+              pagosData.push({ fecha, monto, idDeuda, propietario, tipo });
             });
           });
         });
@@ -86,8 +86,8 @@ const Pagos = () => {
                                 <h5 className="card-title text-center text-decoration-underline">{pago.propietario}</h5>
                                 <p className="card-text"><strong>Expensa: </strong>{pago.fecha}</p>
                                 <p className="card-text"><strong>Monto: </strong>${pago.monto}</p>
-                                <p className="card-text"><strong>Fecha de vto: </strong>{pago.fechaDeVto}</p>
-                                <p className="card-text"><strong>Fecha de pago: </strong>{pago.fechaDePago}</p>
+                                {/* <p className="card-text"><strong>Fecha de vto: </strong>{pago.fechaDeVto}</p> */}
+                                {/* <p className="card-text"><strong>Fecha de pago: </strong>{pago.fechaDePago}</p> */}
                                 {/* Agregar el nombre del propietario */}
                                 {/* Agregar más detalles del pago según sea necesario */}
                                 {/* Por ejemplo, si tienes más información disponible, puedes mostrarla aquí */}
