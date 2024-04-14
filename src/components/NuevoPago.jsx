@@ -32,7 +32,7 @@ const NuevoPago = () => {
     const obtenerDatosExpensa = async () => {
       try {
         // Realizar la solicitud POST al backend para obtener los datos de la expensa por su ID
-        const response = await axios.post(`http://localhost:4500/uf/busquedaExpensa`, { idExpensaHash: idDeudaRec, idPropietario });
+        const response = await axios.post(`http://192.168.100.110:4500/uf/busquedaExpensa`, { idExpensaHash: idDeudaRec, idPropietario });
         setExpensaData(response.data); // Establecer los datos de la expensa en el estado local
         setLoading(false); // Indicar que la carga ha finalizado
 

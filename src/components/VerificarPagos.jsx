@@ -38,7 +38,7 @@ const VerificarPagos = () => {
   useEffect(() => {
     const expensasPagadas = async () => {
       try {
-        const response = await axios.get('http://localhost:4500/UF/Pagos')
+        const response = await axios.get('http://192.168.100.110:4500/UF/Pagos')
         const expensas = response.data
 
         const expensasParaVerificar = expensas.filter(expensa => {

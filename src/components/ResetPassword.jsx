@@ -25,7 +25,7 @@ const ResetPassword = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:4500/login/preguntasSeguridad');
+        const response = await axios.get('http://192.168.100.110:4500/login/preguntasSeguridad');
         setListaDePreguntas(response.data);
       } catch (error) {
         console.error('Error al obtener las preguntas de seguridad:', error.message);
@@ -73,7 +73,7 @@ const ResetPassword = () => {
 
     try {
       // Envía una solicitud al backend para restablecer la contraseña
-      const response = await axios.post('http://localhost:4500/login/reset-password', {
+      const response = await axios.post('http://192.168.100.110:4500/login/reset-password', {
         email,
         newPassword,
         respuestaDeSeguridad,
