@@ -5,7 +5,8 @@ import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
 const NavigationBar = () => {
   const [usuarioAdmin, setUsuarioAdmin] = useState(null);
-  const ufAsoc = sessionStorage.getItem('ufAsoc');
+  const [usuarioHabilitado, setUsuarioHabilitado] = useState(null);
+  const ufHabilitada = sessionStorage.getItem('ufHabilitada');
   const adm = sessionStorage.getItem('adm');
   const navigate = useNavigate();
 
@@ -17,10 +18,19 @@ const NavigationBar = () => {
     }
   }, [adm]);
 
+  useEffect(() => {
+    if (ufHabilitada === "true") {
+      setUsuarioHabilitado(true)
+    } else {
+      setUsuarioHabilitado(false)
+    }
+  }, [ufHabilitada])
+
   const handleLogout = () => {
     sessionStorage.removeItem('userId');
     sessionStorage.removeItem('ufAsoc');
     sessionStorage.removeItem('adm');
+    sessionStorage.removeItem('ufHabilitada');
     navigate('/login');
   };
 
@@ -46,7 +56,7 @@ const NavigationBar = () => {
               </NavDropdown>
             </>
           )}
-          {!usuarioAdmin && (
+          {!usuarioAdmin && usuarioHabilitado && (
             <NavDropdown title="Mis pagos" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/mis-pagos">Pagos registrados</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/ultimos-pagos">Ver últimos pagos</NavDropdown.Item>

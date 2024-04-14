@@ -43,16 +43,19 @@ const Login = () => {
 
 
       const id = response.data.userId;
+      const ufHabilitada = response.data.ufAsociadaHabilitada;
       setUserId(id);
       setError(null); // Limpia cualquier mensaje de error previo
 
       // Guardar el ID de usuario en sessionStorage
       sessionStorage.setItem('userId', id);
+      sessionStorage.setItem('ufHabilitada', ufHabilitada)
       navigate('/home');
     } catch (error) {
       if (error.message === "Request failed with status code 400") {
         console.error("Error al iniciar sesión:", error.message)
         setError("Credenciales inválidas.")
+
       } if (error.message === "Request failed with status code 401") {
         console.error("Error al iniciar sesión:", error.message)
         setError("Credenciales inválidas.")
