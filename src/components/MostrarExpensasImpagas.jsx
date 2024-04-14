@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import NavigationBar from './NavigationBar';
 
-const Pagos = () => {
+const Impagos = () => {
   const [pagos, setPagos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
@@ -18,7 +18,7 @@ const Pagos = () => {
   useEffect(() => {
     const fetchPagos = async () => {
       try {
-        const response = await axios.get(`http://localhost:4500/uf/pagos`);
+        const response = await axios.get(`http://localhost:4500/uf/impagos`);
         // Procesar la respuesta del servidor para obtener los pagos
         let pagosData = [];
 
@@ -30,14 +30,12 @@ const Pagos = () => {
             expensa.periodosPagados.forEach(periodo => {
               // Construir el objeto de pago
               const propietario = uf.propietario;
-              let fechaDePago = periodo.fechaDePago
-              fechaDePago = convertirTimestampAFechaLegible(fechaDePago)
+              let fechaDeVto = periodo.fechaDeVencimiento
+              fechaDeVto = convertirTimestampAFechaLegible(fechaDeVto)
               const fecha = periodo.cuotaNro ? `Cuota Nro ${periodo.cuotaNro}°` : periodo.cuotaMes;
-              const idDeuda = periodo.idExpensa; // Cambiar a idExpensa si es correcto
               const monto = periodo.valorActualizado || periodo.valor;
-              const pago = periodo.diasIntereses > 0 ? `Pago fuera de término: ${periodo.diasIntereses} días de mora` : "Pago en término";
               const tipo = periodo.cuotaNro ? "Exp. Extraordinarias" : "Exp. Mensuales";
-              pagosData.push({ fecha, monto, idDeuda, propietario, tipo, fechaDePago, pago });
+              pagosData.push({ fecha, monto, propietario, tipo, fechaDeVto });
             });
           });
         });
@@ -76,12 +74,12 @@ const Pagos = () => {
           <div className="col-md-8">
             <div className="card">
               <div className="card-body">
-                <h2>Pagos registrados</h2>
-                <p>Este servicio te brinda la información sobre todos los periodos que están pagados.</p>
+                <h2>Expensas con deuda</h2>
+                <p>Este servicio te brinda la información sobre todos los periodos que no están pagados.</p>
                 <br />
                 {isLoading ? (
                   <div className="d-flex align-items-center">
-                    <p>Cargando pagos... <FontAwesomeIcon icon={faSpinner} spin className="ml-2" /></p>
+                    <p>Cargando expensas impagas... <FontAwesomeIcon icon={faSpinner} spin className="ml-2" /></p>
                   </div>
                 ) : (
                   <React.Fragment>
@@ -106,8 +104,7 @@ const Pagos = () => {
                                 <p className="card-text"><strong>Expensa: </strong>{pago.fecha}</p>
                                 <p className="card-text"><strong>Monto: </strong>${pago.monto}</p>
                                 <p className="card-text"><strong>Tipo de expensa: </strong>{pago.tipo}</p>
-                                <p className="card-text"><strong>Fecha de pago: </strong>{pago.fechaDePago}</p>
-                                <p className="card-text">{pago.pago}</p>
+                                <p className="card-text"><strong>Fecha de Vto: </strong>{pago.fechaDeVto}</p>
                               </div>
                             </div>
                           </div>
@@ -125,4 +122,4 @@ const Pagos = () => {
   );
 };
 
-export default Pagos;
+export default Impagos;

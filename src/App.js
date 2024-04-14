@@ -18,6 +18,7 @@ import BajaModificacion from './components/ABM_Expensas/BMIndividual';
 import AltaMultiple from './components/ABM_Expensas/AltaMultiple';
 import ResolverPago from './components/ResolverPago';
 import MostrarExpensasPagas from './components/MostrarExpensasPagas';
+import MostrarExpensasImpagas from './components/MostrarExpensasImpagas';
 //import CrearUsuario from './components/CrearUsuario';
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
           <Route path="/alta-expensa" element={<AltaIndividual />} />
           <Route path="/alta-expensa-multiple" element={<AltaMultiple />} />
           <Route path="/pagos" element={<MostrarExpensasPagas />} />
+          <Route path="/impagos" element={<MostrarExpensasImpagas />} />
 
 
 
