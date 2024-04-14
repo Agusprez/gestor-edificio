@@ -97,7 +97,7 @@ const Register = () => {
 
     try {
       // Enviar la solicitud POST al endpoint correspondiente en el backend
-      const response = await axios.post('http://192.168.100.110:4500/login/crearUsuario', userData);
+      const response = await axios.post('http://localhost:4500/login/crearUsuario', userData);
 
       // Manejar la respuesta del servidor
       console.log('Registro exitoso:', response.data);

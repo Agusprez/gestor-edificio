@@ -14,7 +14,7 @@ const MisDeudas = () => {
   useEffect(() => {
     const fetchPagos = async () => {
       try {
-        const response = await axios.post(`http://192.168.100.110:4500/uf/impagosSegunPropietario/${ufAsoc}`, { usuarioId: userId });
+        const response = await axios.post(`http://localhost:4500/uf/impagosSegunPropietario/${ufAsoc}`, { usuarioId: userId });
         // Procesar la respuesta del servidor para obtener los pagos
         let pagosData = [];
         response.data.expensas.forEach(expensa => {

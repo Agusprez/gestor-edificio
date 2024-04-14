@@ -50,7 +50,7 @@ const VerificarPagoInd = ({ datosDelPago, datosDeUF, onClose }) => {
     try {
 
       // Construir la URL completa para la solicitud PATCH
-      const url = `http://192.168.100.110:4500/UF/verificarPago/${nombreUF}/${idPago}`;
+      const url = `http://localhost:4500/UF/verificarPago/${nombreUF}/${idPago}`;
 
       const response = await axios.patch(url);
 

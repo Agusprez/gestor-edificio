@@ -43,7 +43,7 @@ const RelacionUserUF = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://192.168.100.110:4500/Usuarios/`);
+        const response = await axios.get(`http://localhost:4500/Usuarios/`);
         // Procesar la respuesta del servidor para obtener los datos
         // Aquí debes adaptar el procesamiento de los datos según la estructura de la respuesta que esperas recibir
         // Por ahora, solo establecemos los datos en el estado local y cambiamos isLoading a false

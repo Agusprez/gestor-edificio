@@ -35,7 +35,7 @@ const Login = () => {
 
       setIsLoading(true); // Establecer isLoading a true mientras se procesa la solicitud
 
-      const response = await axios.post('https://192.168.100.110:4500/login', { email, password });
+      const response = await axios.post('http://localhost:4500/login', { email, password });
 
       if (!response) {
         throw new Error('No se recibió respuesta del servidor. Por favor, intenta de nuevo más tarde.');

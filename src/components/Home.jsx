@@ -14,7 +14,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post('https://192.168.100.110:4500/login/obtenerUsuario', { userId: sessionStorage.getItem('userId') });
+        const response = await axios.post('http://localhost:4500/login/obtenerUsuario', { userId: sessionStorage.getItem('userId') });
         setUserData(response.data);
 
         const ufAsociada = response.data.ufAsociada;
@@ -28,7 +28,7 @@ const Home = () => {
         }
 
         if (ufAsociada) {
-          const segundoEndpointResponse = await axios.get(`https://192.168.100.110:4500/UF/obtenerTodo/${ufAsociada}`);
+          const segundoEndpointResponse = await axios.get(`http://localhost:4500/UF/obtenerTodo/${ufAsociada}`);
           setUfData(segundoEndpointResponse.data);
           setUfAsociadaHabilitada(userHabilitado);
           obtenerNombreDepto(ufAsociada)
