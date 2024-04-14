@@ -7,6 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
+
+const convertirTimestampAFechaLegible = timestamp => {
+  let fecha = new Date(timestamp._seconds * 1000); // Convertir segundos a milisegundos
+  fecha = fecha.toLocaleDateString()
+  return fecha; // Formatear la fecha como una cadena legible
+};
 const NuevoPago = () => {
   // Estados para los campos del formulario
   const [imagenId, setImagenId] = useState(null); // Estado para el ID de la imagen
@@ -87,11 +93,7 @@ const NuevoPago = () => {
   };
 
 
-  const convertirTimestampAFechaLegible = timestamp => {
-    let fecha = new Date(timestamp._seconds * 1000); // Convertir segundos a milisegundos
-    fecha = fecha.toLocaleDateString()
-    return fecha; // Formatear la fecha como una cadena legible
-  };
+
 
   // Función para manejar el envío del formulario
   const handleSubmit = async (event) => {
@@ -204,4 +206,5 @@ const NuevoPago = () => {
   );
 }
 
+export { convertirTimestampAFechaLegible }
 export default NuevoPago;

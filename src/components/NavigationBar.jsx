@@ -49,6 +49,8 @@ const NavigationBar = () => {
                 {/* Agrega aquí otras opciones según sea necesario */}
               </NavDropdown>
               <NavDropdown title="Expensas" id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to="/pagos">Mostrar expensas PAGAS</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/impagos">Mostrar expensas IMPAGAS</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/alta-expensa-multiple">Carga de expensas multiple</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/alta-expensa">Alta de expensas individual</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/baja-modif-expensa">Modificacion o baja de expensas individual</NavDropdown.Item>
